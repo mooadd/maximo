@@ -11,13 +11,12 @@
 
   </head>
   <body>
-
-    <div class="content">
+    <div class="content container-lg no-padding-sides">
 
       <header class="main-header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <!--<a class="navbar-brand" href="#">Maximo</a>-->
-          <button class="custom-btn btn-3"><span>Maximo</span></button>
+          <button class="custom-btn btn-3 logo-button"><span>Maximo</span></button>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -54,41 +53,54 @@
       </header>
 
       <div class="">
-          <div class="container">
-    <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5">
-          <div class="card-body">
-            <h5 class="card-title text-center">Sign In</h5>
-            <form class="form-signin">
-              <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputEmail">Email address</label>
-              </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+              <div class="card card-signin my-5">
+                <div class="card-body">
+                  <h5 class="card-title text-center">Sign In</h5>
+                    <form class="form-signin">
+                      <div class="form-label-group">
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                        <label for="inputEmail">Email address</label>
+                      </div>
 
-              <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <label for="inputPassword">Password</label>
-              </div>
+                      <div class="form-label-group">
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <label for="inputPassword">Password</label>
+                      </div>
 
-              <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">Remember password</label>
+                      <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Remember password</label>
+                      </div>
+                      <!-- <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button> -->
+                      <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+                      <hr class="my-4">
+                    </form>
+                 </div>
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-              <hr class="my-4">
-            </form>
+            </div>
+           </div>
           </div>
         </div>
-      </div>
-    </div>
-</div>
-      </div>
+
     </div>
 
 
 
-    <footer class="footer">This is out footer</footer>
+    <footer class="footer container-lg no-padding-sides">
+      <div class="element-footer">
+                <hr class="my-4">
+      </div>
+      <div class="element-footer">
+          <button class="custom-btn btn-3 logo-button one"><span>Maximo</span></button>
+      </div>
+
+      <div class="element-footer">
+          <small class="two">Copyright © 2020 Maximo Inc. All rights reserved.</small>
+      </div>
+    </footer>
 
 
 

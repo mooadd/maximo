@@ -10,6 +10,18 @@ body {
 }
 .footer {
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.copyright {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.no-padding-sides {
+  padding: 0 0;
 }
 
 body {
@@ -35,8 +47,8 @@ p {
   margin: 40px auto;
   text-align: center;
 }
-button {
-  margin: 20px;
+.logo-button {
+  /* margin: 20px; */
 }
 .custom-btn {
   width: 130px;
@@ -58,6 +70,16 @@ button {
   text-shadow:  2px 2px 3px rgba(255,255,255,.5),
               -4px -4px 6px rgba(116, 125, 136, .2);
   outline: none;
+}
+
+.one,
+.two {
+  display:table;
+  margin:0 auto;
+}
+
+.element-footer {
+  padding: 0.5em 0;
 }
 
 
