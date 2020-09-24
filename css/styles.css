@@ -82,6 +82,17 @@ p {
   padding: 0.5em 0;
 }
 
+.width-full {
+  width: 100%;
+}
+
+.sign-stuff {
+  margin-top: 3em;
+}
+
+.circle-button {
+  border-radius: 1em;
+}
 
 /* 3 */
 .btn-3 {
