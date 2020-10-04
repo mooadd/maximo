@@ -1,0 +1,12 @@
+Application will maintain a database of movie information, including things like the movie title, release year, writers, actors, etc.
+The site will support regular users, who will be capable of browsing all of the information on the site and adding movie reviews.
+
+
+
+Homepage: display a sign-in with a drop down menu with logo on the side and with socials at the bottom.
+
+
+Drop down menu:
+------> Movies
+------> People
+------> Users (accounts)
