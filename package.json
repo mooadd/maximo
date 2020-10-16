@@ -1,0 +1,22 @@
+{
+  "name": "maximo",
+  "version": "1.0.0",
+  "description": "A Movie Review DataBase",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mooadd/maximo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mooadd/maximo/issues"
+  },
+  "homepage": "https://github.com/mooadd/maximo#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
