@@ -27,7 +27,24 @@ function getMovies(searchText){
                 <div class="well text-center">
                   <img src="${data[i].Poster}">
                   <h5>${data[i].Title}</h5>
-                  <a onclick="movieSelected('${data[i].imdbID}')" class="btn btn-primary" href='#'>Movie Details</a>
+                  <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Movie Details
+                  </a>
+
+                  <div class="collapse" id="collapseExample${i}">
+                    <div class="card card-body">
+                      <p>${data[i].Plot}<p>
+                      <p class="">${data[i].Ratings[0].Source} ${data[i].Type} rating: ${data[i].Ratings[0].Value}<p>
+                      <p class="">${data[i].Ratings[1].Source} ${data[i].Type} rating: ${data[i].Ratings[1].Value}<p>
+                      <p>Maximo rating: null<p>
+                      <p class="">Runtime: ${data[i].Runtime}<p>
+                      <p class="">Release year: ${data[i].Year}<p>
+                      <a class="btn btn-success" role="button" href="#">
+                        More Info
+                      </a>
+
+                    </div>
+                </div>
                 </div>
               </div>
             `;
