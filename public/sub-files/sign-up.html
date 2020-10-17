@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/register.css">
     <link rel="stylesheet" href="../css/media.css">
+    <link rel="stylesheet" href="../css/movies.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Maximo</title>
@@ -46,13 +47,17 @@
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
               </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <form class="form-inline my-2 my-lg-0" id="searchForm">
+              <input class="form-control mr-sm-2" type="text" id="searchText" placeholder="Search Movies..." aria-label="Search">
             </form>
           </div>
         </nav>
       </header>
+
+
+      <div class="container">
+        <div id="movies" class="row"></div>
+      </div>
 
       <div class="container register">
         <div class="row align-items-center">
@@ -117,6 +122,7 @@
     <!-- BootStrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+    <script src="../js/display-movies2.js"></script>
   </body>
 
 </html>
