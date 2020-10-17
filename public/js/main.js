@@ -10,26 +10,29 @@ $(document).ready(() => {
 });
 
 function getMovies(searchText){
-  fetch(`http://www.omdbapi.com/?apikey=${key}&s=${searchText}`)
+  fetch(`../json/movie-data.json`)
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      let movies = data.Search;
-      console.log(movies);
-      let output = '';
+      // console.log(data)
 
-      $.each(movies, (index, movie) => {
-        output += `
-          <div class="col-md-3">
-            <div class="well text-center">
-              <img src="${movie.Poster}">
-              <h5>${movie.Title}</h5>
-              <a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href='#'>Movie Details</a>
-            </div>
-          </div>
-        `;
-      });
+      let output = '';
+      for (let i=0; i < data.length; i++) {
+        // console.log('what is up')
+        if (data[i].Title.toUpperCase().indexOf(searchText.toUpperCase()) != -1) {
+          console.log(data[i]);
+            output += `
+              <div class="col-md-3">
+                <div class="well text-center">
+                  <img src="${data[i].Poster}">
+                  <h5>${data[i].Title}</h5>
+                  <a onclick="movieSelected('${data[i].imdbID}')" class="btn btn-primary" href='#'>Movie Details</a>
+                </div>
+              </div>
+            `;
+        }
+      }
 
       $('#movies').html(output);
 
