@@ -66,25 +66,23 @@
                 <div class="card card-signin my-5">
                   <div class="card-body">
                     <h5 class="card-title text-center">Sign In</h5>
-                      <form class="form-signin">
+
+                    <!-- Make sure this works -->
+                      <form action="/Login" method="POST" class="form-signin">
                         <div class="form-label-group">
-                          <input type="username" id="inputusername" class="form-control" placeholder="Username" required autofocus>
-                          <!-- <label for="inputEmail">Email address</label> -->
+                          <input type="username" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
                         </div>
 
                         <div class="form-label-group">
-                          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                          <!-- <label for="inputPassword">Password</label> -->
+                          <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
                         </div>
 
-                        <div class="custom-control custom-checkbox mb-3">
-                          <input type="checkbox" class="custom-control-input" id="customCheck1">
-                          <label class="custom-control-label" for="customCheck1">Remember password</label>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-lg btn-block circle-button">Login</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block circle-button">Login</button>
                         <hr class="my-4">
                         <a href="/Register" class="btn btn-success btn-lg btn-block">Sign up</a>
                       </form>
+
+
                       <a type="button" href="/Reset-Password" class="btn btn-link">Forgot Password?</a>
                    </div>
                 </div>
