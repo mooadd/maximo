@@ -1,8 +1,10 @@
 const PORT = 9000
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
 const app = express()
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
+const expressLayouts = require('express-ejs-layouts');
 
 // An array to store user information
 let users = [];
@@ -15,7 +17,13 @@ const urlencodedParser = bodyParser.urlencoded({extended: false})
 
 // https://stackoverflow.com/questions/9177049/express-js-req-body-undefined
 
+// app.use(bodyParser())
+app.use(cors())
+app.use(expressLayouts);
 app.use(express.static('public'))
+
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
 app.get('/Login', (req, res) => {
     res.sendFile(__dirname + "/public/index.html");
@@ -29,7 +37,9 @@ app.post('/Login', urlencodedParser, (req, res) => {
       if ((users[i].username === req.body.username) && (users[i].password === req.body.password)) {
         console.log('found the user.')
         bool = true;
-        res.send('temporary user page')
+        res.render('about', {
+          username: req.body.username
+        })
         break;
       }
     }
@@ -68,8 +78,6 @@ app.post('/Register', urlencodedParser,  (req, res) => {
 app.get('/Reset-Password', (req, res) => {
     res.sendFile(__dirname + "/public/sub-files/forgot-pass.html");
 })
-
-
 
 
 app.listen(PORT, () => {

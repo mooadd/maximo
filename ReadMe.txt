@@ -1,12 +1,7 @@
+How to install all node modules:
 
-What to install:
-=> npm i --save express
-=> npm i -g nodemon
-=> npm i body-parser
-
+=> npm install
 
 How to run:
+
 => nodemon
-
-
-You simply just type 'nodemon'
