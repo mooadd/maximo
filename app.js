@@ -81,7 +81,7 @@ app.get('/Reset-Password', (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/login`)
+  console.log(`Server running at http://localhost:${PORT}/Login`)
 })
 
 // I have installed nodemon. to run, you simply type (nodemon) in the shell.
