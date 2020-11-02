@@ -50,6 +50,19 @@
             <form class="form-inline my-2 my-lg-0" id="searchForm">
               <input class="form-control mr-sm-2" type="text" id="searchText" placeholder="Search Movies..." aria-label="Search">
             </form>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <button id="dropdown-button" class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Title</button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#" onclick="changeToTitle()">Title</a>
+                  <a class="dropdown-item" href="#" onclick="changeToGenre()">Genre</a>
+                  <a class="dropdown-item" href="#" onclick="changeToYear()">Year</a>
+                  <a class="dropdown-item" href="#" onclick="changeToMinRating()">Minrating (0-5)</a>
+                </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search Movies...">
+           </div>
           </div>
         </nav>
       </header>
@@ -124,6 +137,7 @@
     <!-- BootStrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/movie-search.js"></script>
 
     </script>
   </body>
