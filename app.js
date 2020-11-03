@@ -91,15 +91,19 @@ app
     console.log("texter equals:", req.body.texter);
     console.log("search equals:", req.body.search);
 
-    if (req.body.texter === "Title") {
-      res.render("moviesByTitle");
-    } else if (req.body.texter === "Genre") {
-      res.render("moviesByGenre");
-    } else if (req.body.texter === "Year") {
-      res.render("moviesByYear");
-    } else {
-      res.render("moviesByMinRating");
-    }
+    res.render("movies", {
+      texter: req.body.texter,
+      search: req.body.search,
+    });
+    // if (req.body.texter === "Title") {
+    //   res.render("moviesByTitle");
+    // } else if (req.body.texter === "Genre") {
+    //   res.render("moviesByGenre");
+    // } else if (req.body.texter === "Year") {
+    //   res.render("moviesByYear");
+    // } else {
+    //   res.render("moviesByMinRating");
+    // }
   });
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
