@@ -1,5 +1,6 @@
-#movies img, #movie img {
-  width:100%;
+#movies img,
+#movie img {
+  width: 100%;
 }
 
 /* @media(min-width:960px) {
@@ -12,3 +13,7 @@
   }
 
 } */
+
+#texter {
+  display: none;
+}

@@ -83,7 +83,24 @@ app.route("/Reset-Password").get((req, res) => {
   res.sendFile(__dirname + "/public/sub-files/forgot-pass.html");
 });
 
-// Runs the server on port 9000
+// MOVIE ROUTE
+app
+  .route("/movies")
+  .get((req, res) => {})
+  .post(urlencodedParser, (req, res) => {
+    console.log("texter equals:", req.body.texter);
+    console.log("search equals:", req.body.search);
+
+    if (req.body.texter === "Title") {
+      res.render("moviesByTitle");
+    } else if (req.body.texter === "Genre") {
+      res.render("moviesByGenre");
+    } else if (req.body.texter === "Year") {
+      res.render("moviesByYear");
+    } else {
+      res.render("moviesByMinRating");
+    }
+  });
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
