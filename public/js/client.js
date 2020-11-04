@@ -30,9 +30,12 @@ const titleOutput = (dataObject, searchValue) => {
                     <p>Maximo rating: 0<p>
                     <p class="">Runtime: ${dataObject[i].Runtime}<p>
                     <p class="">Release year: ${dataObject[i].Year}<p>
-                    <a class="btn btn-success" role="button" href="#">
-                      More Info
-                    </a>
+                    <form action="/movies/:">
+                      <input type="text" id="movie_id" name="movie_id" value="${i}">
+                      <button class="btn btn-success" role="button" href="#">
+                        More Info
+                      </button>
+                    </form>
                   </div>
               </div>
               </div>

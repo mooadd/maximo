@@ -47,8 +47,8 @@
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
               </li>
             </ul>
-              <form action="/movies" method="POST">
-                <div class="form-group">
+              <form action="/movies" class="form-search">
+                <div class="form-group search-stuff" >
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <button id="dropdown-button" class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Title</button>
@@ -62,11 +62,10 @@
                     <input type="text" type="text" id="texter" name="texter" value="Title">
                     <input id="searchTextBetter" name="search" type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search Movies...">
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary search-button">Submit</button>
                 </div>
               </form>
             </div>
-          </div>
         </nav>
       </header>
 

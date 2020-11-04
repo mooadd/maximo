@@ -84,27 +84,21 @@ app.route("/Reset-Password").get((req, res) => {
 });
 
 // MOVIE ROUTE
-app
-  .route("/movies")
-  .get((req, res) => {})
-  .post(urlencodedParser, (req, res) => {
-    console.log("texter equals:", req.body.texter);
-    console.log("search equals:", req.body.search);
-
-    res.render("movies", {
-      texter: req.body.texter,
-      search: req.body.search,
-    });
-    // if (req.body.texter === "Title") {
-    //   res.render("moviesByTitle");
-    // } else if (req.body.texter === "Genre") {
-    //   res.render("moviesByGenre");
-    // } else if (req.body.texter === "Year") {
-    //   res.render("moviesByYear");
-    // } else {
-    //   res.render("moviesByMinRating");
-    // }
+app.route("/movies").get((req, res) => {
+  console.log(req.query);
+  res.render("movies", {
+    texter: req.query.texter,
+    search: req.query.search,
   });
+});
+
+// UNIQUE MOVIE ROUTE
+app.route("/movies/:").get((req, res) => {
+  console.log("the unique movie id is", req.query);
+  res.render("unique-movie", {
+    movie_id: req.query.movie_id,
+  });
+});
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

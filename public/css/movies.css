@@ -17,3 +17,11 @@
 #texter {
   display: none;
 }
+
+#movie_id {
+  display: none;
+}
+
+.unique-movie-size {
+  margin: 0 auto;
+}

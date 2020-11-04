@@ -15,7 +15,6 @@
   </head>
   <body>
     <div class="content container-lg no-padding-sides">
-
       <header class="main-header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <!--<a class="navbar-brand" href="#">Maximo</a>-->
@@ -27,10 +26,10 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="/Login">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="sub-files/recommended-movies.html">Movies</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,13 +46,27 @@
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
               </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" id="searchForm">
-              <input class="form-control mr-sm-2" type="text" id="searchText" placeholder="Search Movies..." aria-label="Search">
-            </form>
-          </div>
+              <form action="/movies" class="form-search">
+                <div class="form-group search-stuff" >
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button id="dropdown-button" class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Title</button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" onclick="changeToTitle()">Title</a>
+                        <a class="dropdown-item" href="#" onclick="changeToGenre()">Genre</a>
+                        <a class="dropdown-item" href="#" onclick="changeToYear()">Year</a>
+                        <a class="dropdown-item" href="#" onclick="changeToMinRating()">Minrating (0-5)</a>
+                      </div>
+                    </div>
+                    <input type="text" type="text" id="texter" name="texter" value="Title">
+                    <input id="searchTextBetter" name="search" type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search Movies...">
+                  </div>
+                  <button type="submit" class="btn btn-primary search-button">Submit</button>
+                </div>
+              </form>
+            </div>
         </nav>
       </header>
-
 
       <div class="container">
         <div id="movies" class="row"></div>
@@ -122,7 +135,7 @@
     <!-- BootStrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-    <script src="../js/main.js"></script>
+    <script src="../js/movie-search.js"></script>
   </body>
 
 </html>
