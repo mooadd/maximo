@@ -86,10 +86,16 @@ app.route("/Reset-Password").get((req, res) => {
 // MOVIE ROUTE
 app.route("/movies").get((req, res) => {
   console.log(req.query);
+
+  // if (req.query.texter === "People") {
+  //   console.log("We are going to the people route");
+  //   res.redirect(`/People?name=${res.query.search}`);
+  // } else {
   res.render("movies", {
     texter: req.query.texter,
     search: req.query.search,
   });
+  // }
 });
 
 // UNIQUE MOVIE ROUTE
@@ -99,6 +105,27 @@ app.route("/movies/:").get((req, res) => {
     movie_id: req.query.movie_id,
   });
 });
+
+// PEOPLE ROUTE
+app.route("/People").get((req, res) => {
+  console.log("the unique person is", req.query);
+  res.render("people", {
+    search: req.query.search,
+  });
+});
+
+// USERS ROUTE
+app.route("/users").get((req, res) => {
+  console.log("users route", req.query);
+  res.send("users");
+});
+
+// UNIQUE MOVIE ROUTE
+app.route("/users/:").get((req, res) => {
+  console.log("the unique user id is", req.query);
+  res.send("<h1>This hasn't been done yet</h1>");
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
