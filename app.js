@@ -1,10 +1,16 @@
 const PORT = 9000;
 const express = require("express");
+const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
 const app = express();
 const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
+
+// Getting out json folder
+let byteMovies = fs.readFileSync("./public/json/movie-data.json");
+let movies = JSON.parse(byteMovies);
+// console.log(movies[0]);
 
 // An array to store user information
 let users = [];
