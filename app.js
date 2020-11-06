@@ -8,6 +8,7 @@ const expressLayouts = require("express-ejs-layouts");
 
 // An array to store user information
 let users = [];
+let userOnline;
 
 // Create application/json parser
 const jsonParser = bodyParser.json();
@@ -36,11 +37,10 @@ app
           users[i].username === req.body.username &&
           users[i].password === req.body.password
         ) {
+          userOnline = users[i];
           console.log("found the user.");
           bool = true;
-          res.render("about", {
-            username: req.body.username,
-          });
+          res.redirect("/Profile");
           break;
         }
       }
@@ -68,6 +68,8 @@ app
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
+        contributing_user: false,
+        following: [],
       });
       // If everything goes well. new user gets added to the array. we redirect
       // the user to the login page
@@ -126,6 +128,31 @@ app.route("/users/:").get((req, res) => {
   res.send("<h1>This hasn't been done yet</h1>");
 });
 
+// PROFILE ROUTE
+app
+  .route("/Profile")
+  .get((req, res) => {
+    if (!userOnline.contributing_user) {
+      // We go to the normal user profile page
+      res.render("normal-user", userOnline);
+    } else {
+      // We go to the contributing user profile page
+      res.render("contributing-user", userOnline);
+    }
+  })
+  .post(urlencodedParser, (req, res) => {
+    // console.log(req.body.contributing_user);
+    if (req.body.contributing_user === "contributing_user") {
+      userOnline.contributing_user = true;
+    } else {
+      userOnline.contributing_user = false;
+    }
+
+    for (let i = 0; i < users.length; i++) {
+      if (userOnline.username === users[i].username) users[i] = userOnline;
+    }
+    res.redirect("/Profile");
+  });
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

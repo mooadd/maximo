@@ -1,0 +1,23 @@
+<div class="card" style="width: 25rem">
+  <h1 class="text-center"><%=username%></h1>
+  <img src="./images/default-user.png" class="card-img-top" alt="..." />
+  <div class="card-body">
+    <p class="card-text"></p>
+
+    <form action="/Profile" method="POST">
+      <input
+        style="display: none"
+        type="text"
+        name="normal_user"
+        value="normal_user"
+      />
+      <button type="submit" class="btn btn-primary btn-lg btn-block">
+        DownGrade to a Normal User
+      </button>
+    </form>
+  </div>
+
+  <h1>
+    Here, we should allow the users now to add movies into the JSON folder
+  </h1>
+</div>

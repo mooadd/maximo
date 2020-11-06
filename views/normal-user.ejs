@@ -1,0 +1,19 @@
+<div class="card" style="width: 25rem">
+  <h1 class="text-center"><%=username%></h1>
+  <img src="./images/default-user.png" class="card-img-top" alt="..." />
+  <div class="card-body">
+    <p class="card-text"></p>
+
+    <form action="/Profile" method="POST">
+      <input
+        style="display: none"
+        type="text"
+        name="contributing_user"
+        value="contributing_user"
+      />
+      <button type="submit" class="btn btn-primary btn-lg btn-block">
+        Become a Contributing User
+      </button>
+    </form>
+  </div>
+</div>

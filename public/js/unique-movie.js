@@ -1,5 +1,4 @@
 let movie_id = $("#unique-movie-thing").html();
-alert(movie_id);
 
 // alert(texterValue);
 // alert(searchValue);
@@ -31,6 +30,39 @@ function getRandom(arr, n) {
   }
   return result;
 }
+
+const addRelatedMovied = (arr) => {
+  let outputVariable = "";
+  let smallerSimilarMovies;
+  if (arr.length == 1) {
+    smallerSimilarMovies = getRandom(arr, 1);
+  } else if (arr.length == 2) {
+    smallerSimilarMovies = getRandom(arr, 2);
+  } else if (arr.length == 3) {
+    smallerSimilarMovies = getRandom(arr, 3);
+  } else if (arr.length == 4) {
+    smallerSimilarMovies = getRandom(arr, 4);
+  } else if (arr.length == 5) {
+    smallerSimilarMovies = getRandom(arr, 5);
+  } else {
+    smallerSimilarMovies = getRandom(arr, 6);
+  }
+  console.log(smallerSimilarMovies);
+
+  for (let i = 0; i < smallerSimilarMovies.length; i++) {
+    outputVariable += `<div class="col-md-2">
+        <img src="${smallerSimilarMovies[i].data.Poster}">
+                            <form action="/movies/:">
+                      <input type="text" id="movie_id" name="movie_id" value="${smallerSimilarMovies[i].index}">
+                      <button class="btn btn-info" role="button" href="#">
+                        Go
+                      </button>
+                    </form>
+      </div>`;
+  }
+
+  return outputVariable;
+};
 
 const titleOutput = (dataObject, searchValue) => {
   let output = "";
@@ -103,36 +135,14 @@ fetch(`../json/movie-data.json`)
       }
     }
     // Found similar movies lol.
-
-    console.log("these are similar movies");
     console.log(similarMovies);
-    let smallerSimilarMovies;
-    if (similarMovies.length == 1) {
-      smallerSimilarMovies = getRandom(similarMovies, 1);
-    } else if (similarMovies.length == 2) {
-      smallerSimilarMovies = getRandom(similarMovies, 2);
-    } else if (similarMovies.length == 3) {
-      smallerSimilarMovies = getRandom(similarMovies, 3);
-    } else if (similarMovies.length == 4) {
-      smallerSimilarMovies = getRandom(similarMovies, 4);
-    } else if (similarMovies.length == 5) {
-      smallerSimilarMovies = getRandom(similarMovies, 5);
-    } else {
-      smallerSimilarMovies = getRandom(similarMovies, 6);
-    }
-    console.log(smallerSimilarMovies);
     let outputVariable = "";
-    for (let i = 0; i < smallerSimilarMovies.length; i++) {
-      outputVariable += `<div class="col-md-2">
-        <img src="${smallerSimilarMovies[i].data.Poster}">
-                            <form action="/movies/:">
-                      <input type="text" id="movie_id" name="movie_id" value="${smallerSimilarMovies[i].index}">
-                      <button class="btn btn-info" role="button" href="#">
-                        Go
-                      </button>
-                    </form>
-      </div>`;
+    if (similarMovies.length > 0) {
+      outputVariable = addRelatedMovied(similarMovies);
+    } else {
+      outputVariable += '<p class="text-muted">No related movies<p>';
     }
+
     // console.log("output variable equals:", outputVariable);
     let output = "";
 
