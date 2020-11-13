@@ -6,6 +6,15 @@ const peopleOutput = (dataObject, searchValue) => {
   let output = "";
   console.log(dataObject);
   // We return stuff;
+
+  for (let i = 0; i < dataObject.length; ++i)
+      for (let j = 0; j < dataObject.length; ++j)
+          if (i !== j && dataObject[i].Actors === dataObject[j].Actors && dataObject[i].Director === dataObject[j].Director
+          && dataObject[i].Writer === dataObject[j].Writer)
+              dataObject.splice(j, 1);
+  console.log(dataObject);
+
+
   for (let i = 0; i < dataObject.length; i++) {
     let actors = dataObject[i].Actors.split(",");
     let director = dataObject[i].Director;
@@ -13,10 +22,46 @@ const peopleOutput = (dataObject, searchValue) => {
 
     if (dataObject[i].Director.toUpperCase().includes(searchValue.toUpperCase()) ) {
 
-    console.log(dataObject[i]);
+    output += `
+    <div class="people">
+      <div class="well text-center">
+      <form action="/movies/:">
+        <input type="text" id="movie_id" name="movie_id" value="${i}">
+        <a href="#">
+          ${dataObject[i].Director} (Director)
+        </a>
+      </form>
+      </div>
+    </div>
 
-    output += `<h5>${dataObject[i].Director}</h5>`;
+    `;
     }
+
+    else if (dataObject[i].Actors.toUpperCase().includes(searchValue.toUpperCase()) ) {
+
+    output += `
+    <div class="people">
+      <div class="well text-center">
+        <a href="/Login">
+          ${dataObject[i].Actors} (Actor)
+        </a>
+      </div>
+    </div>
+    `;
+  }
+
+    else if (dataObject[i].Writer.toUpperCase().includes(searchValue.toUpperCase()) ) {
+
+    output += `
+    <div class="people">
+      <div class="well text-center">
+        <a href="/Login">
+          ${dataObject[i].Writer} (Writer)
+        </a>
+      </div>
+    </div>
+    `;
+  }
 
   }
 
