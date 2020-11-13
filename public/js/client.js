@@ -168,6 +168,7 @@ const minRatingOutput = (dataObject, searchValue) => {
 
   return output;
 };
+
 if (searchValue == "") {
   $("#movies").html(
     "<h1>Enter a word or phrase to search on in the form at the top of the page.</h1>"

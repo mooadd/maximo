@@ -39,18 +39,18 @@ app.use(
   })
 );
 
-app.route("/").get((req, res) => {
-  if (req.session.userOnline == null) res.redirect("/Login");
-  else {
-    res.redirect("/Profile");
-  }
-});
+// This route does nothing
+app.route("/").get((req, res) => {});
 
 // LOGIN ROUTE
 app
   .route("/Login")
   .get((req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
+    if (userOnline != null) {
+      res.redirect("/Profile");
+    } else {
+      res.sendFile(__dirname + "/public/index.html");
+    }
   })
   .post(urlencodedParser, (req, res) => {
     // now, lets check if a username and password is in an the array of users.
@@ -62,7 +62,7 @@ app
           users[i].password === req.body.password
         ) {
           userOnline = users[i];
-          console.log("found the user.");
+          console.log(userOnline);
           bool = true;
           res.redirect("/Profile");
           break;
@@ -82,7 +82,12 @@ app
 app
   .route("/Register")
   .get((req, res) => {
-    res.sendFile(__dirname + "/public/sub-files/sign-up.html");
+    if (userOnline != null) {
+      console.log("got here");
+      res.redirect("/Profile");
+    } else {
+      res.sendFile(__dirname + "/public/sub-files/sign-up.html");
+    }
   })
   .post(urlencodedParser, (req, res) => {
     // will get a username, email, password
@@ -148,18 +153,19 @@ app.route("/users").get((req, res) => {
   var regExp = /[a-zA-Z]/g;
   let searchValue = req.query.search;
 
-  users.some(function(elem) {
+  users.some(function (elem) {
     console.log(elem); //result: "My","name"
 
     if (elem.username === req.query.search) {
       console.log("found the user!!!!!!!!", req.query.search);
       console.log(elem);
-      res.render("users", {name: elem.username, email: elem.email});
+      res.render("users", { name: elem.username, email: elem.email });
       return true;
-    }
-    else if (elem.username.toUpperCase().includes(searchValue.toUpperCase())){
+    } else if (
+      elem.username.toUpperCase().includes(searchValue.toUpperCase())
+    ) {
       console.log(elem);
-      res.render("users", {name: elem.username, email: elem.email});
+      res.render("users", { name: elem.username, email: elem.email });
       return true;
     }
     // else {
@@ -170,28 +176,27 @@ app.route("/users").get((req, res) => {
     return false;
   });
 
-    //
-    //
-    // for (let i = 0; i < users.length; i++) {
-    //   if (users[i].username === req.query.search) {
-    //     console.log("found the user!!!!!!!!", req.query.search);
-    //     console.log(users);
-    //     res.render("users", {name: users[i].username, email: users[i].email});
-    //     break;
-    //   }
-    //
-    //   else if (users[i].username.indexOf(req.query.search) > - 1){
-    //     console.log(users);
-    //     res.render("users", {name: users[i].username, email: users[i].email});
-    //     break;
-    //   }
-    //
-    //   else {
-    //       res.send("User Not found")
-    //       return true;
-    //     }
-    // }
-
+  //
+  //
+  // for (let i = 0; i < users.length; i++) {
+  //   if (users[i].username === req.query.search) {
+  //     console.log("found the user!!!!!!!!", req.query.search);
+  //     console.log(users);
+  //     res.render("users", {name: users[i].username, email: users[i].email});
+  //     break;
+  //   }
+  //
+  //   else if (users[i].username.indexOf(req.query.search) > - 1){
+  //     console.log(users);
+  //     res.render("users", {name: users[i].username, email: users[i].email});
+  //     break;
+  //   }
+  //
+  //   else {
+  //       res.send("User Not found")
+  //       return true;
+  //     }
+  // }
 });
 
 // UNIQUE MOVIE ROUTE
@@ -204,15 +209,16 @@ app.route("/users/:").get((req, res) => {
 app
   .route("/Profile")
   .get((req, res) => {
-    if (!userOnline) {
+    if (userOnline == null) {
       res.redirect("/Login");
-    }
-    if (!userOnline.contributing_user) {
-      // We go to the normal user profile page
-      res.render("normal-user", userOnline);
     } else {
-      // We go to the contributing user profile page
-      res.render("contributing-user", userOnline);
+      if (!userOnline.contributing_user) {
+        // We go to the normal user profile page
+        res.render("normal-user", userOnline);
+      } else {
+        // We go to the contributing user profile page
+        res.render("contributing-user", userOnline);
+      }
     }
   })
   .post(urlencodedParser, (req, res) => {
@@ -228,6 +234,12 @@ app
     }
     res.redirect("/Profile");
   });
+
+app.route("/Logout").get((req, res) => {
+  userOnline = null;
+  console.log(userOnline);
+  res.redirect("/Login");
+});
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
