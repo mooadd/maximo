@@ -1,19 +1,25 @@
-let searchValue = $("#texter").html();
+let searchValue = $("#search").html();
 let people = [];
 // Now I wan't to display people with that same name lol.
 
 const peopleOutput = (dataObject, searchValue) => {
   let output = "";
+  console.log(dataObject);
   // We return stuff;
   for (let i = 0; i < dataObject.length; i++) {
     let actors = dataObject[i].Actors.split(",");
     let director = dataObject[i].Director;
     let writers = dataObject[i].Writer.split(",");
+
+    if (dataObject[i].Director.toUpperCase().includes(searchValue.toUpperCase()) ) {
+
+    console.log(dataObject[i]);
+
+    output += `<h5>${dataObject[i].Director}</h5>`;
+    }
+
   }
 
-  console.log(people);
-
-  output = "<h1>This is too hard. I don't know how to do this</h1>";
   return output;
 };
 
