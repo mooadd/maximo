@@ -4,6 +4,7 @@ const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 
@@ -14,7 +15,9 @@ let movies = JSON.parse(byteMovies);
 
 // An array to store user information
 let users = [];
-let userOnline;
+let userOnline = null;
+let people = [];
+let peopleId = 1;
 
 // Create application/json parser
 const jsonParser = bodyParser.json();
@@ -27,6 +30,20 @@ app.use(expressLayouts);
 app.use(express.static("public"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(
+  session({
+    secret: "secret-key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.route("/").get((req, res) => {
+  if (req.session.userOnline == null) res.redirect("/Login");
+  else {
+    res.redirect("/Profile");
+  }
+});
 
 // LOGIN ROUTE
 app
@@ -138,6 +155,9 @@ app.route("/users/:").get((req, res) => {
 app
   .route("/Profile")
   .get((req, res) => {
+    if (!userOnline) {
+      res.redirect("/Login");
+    }
     if (!userOnline.contributing_user) {
       // We go to the normal user profile page
       res.render("normal-user", userOnline);
