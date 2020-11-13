@@ -1,4 +1,4 @@
-<div class="card" style="width: 25rem">
+<!-- <div class="card" style="width: 25rem">
   <h1 class="text-center"><%=username%></h1>
   <img src="./images/default-user.png" class="card-img-top" alt="..." />
   <div class="card-body">
@@ -15,5 +15,124 @@
         Become a Contributing User
       </button>
     </form>
+  </div>
+</div> -->
+
+<!-- <ul class="nav justify-content-between">
+  <li class="nav-item">
+    <h1>User: <%=username%></h1>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="#">Logout</a>
+  </li>
+</ul> -->
+
+<div class="container">
+  <!-- This is the nav -->
+  <ul class="nav justify-content-between bg-light align-items-center">
+    <li class="nav-item">
+      <h1>User: <%=username%></h1>
+    </li>
+
+    <div class="d-flex flex-row align-items-center">
+      <form action="/Profile" method="POST">
+        <input
+          style="display: none"
+          type="text"
+          name="contributing_user"
+          value="contributing_user"
+        />
+        <button type="submit" class="btn btn-success">Contribute</button>
+      </form>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/Logout">Logout</a>
+      </li>
+    </div>
+  </ul>
+
+  <div class="my-4 row d-flex justify-content-center">
+    <div style="">
+      <form
+        action="/movies"
+        name="search-theme-form"
+        id="search-theme-form"
+        class="form-search text-center form-search-bigger"
+      >
+        <div class="form-group search-stuff">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button
+                id="dropdown-button"
+                class="btn btn-outline-secondary dropdown-toggle"
+                type="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Title
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#" onclick="changeToTitle()"
+                  >Title</a
+                >
+                <a class="dropdown-item" href="#" onclick="changeToGenre()"
+                  >Genre</a
+                >
+                <a class="dropdown-item" href="#" onclick="changeToYear()"
+                  >Year</a
+                >
+                <a class="dropdown-item" href="#" onclick="changeToMinRating()"
+                  >Minrating (0-5)</a
+                >
+                <a class="dropdown-item" href="#" onclick="changeToPeople()"
+                  >People</a
+                >
+                <a class="dropdown-item" href="#" onclick="changeToUsers()"
+                  >Users</a
+                >
+              </div>
+            </div>
+            <input
+              type="text"
+              type="text"
+              id="texter"
+              name="texter"
+              value="Title"
+            />
+            <input
+              id="searchTextBetter"
+              name="search"
+              type="text"
+              class="form-control"
+              aria-label="Text input with dropdown button"
+              placeholder="Search..."
+            />
+          </div>
+          <button type="submit" class="btn btn-primary search-button">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="creative-card bg-primary text-white">
+        <h2>Following</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="creative-card bg-info text-white">
+        <h2>Followers</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="creative-card bg-success text-white">
+        <h2>Movies for you</h2>
+      </div>
+    </div>
   </div>
 </div>

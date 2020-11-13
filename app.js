@@ -4,17 +4,20 @@ const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 //const popup = require('popups');
 // Getting out json folder
-let byteMovies = fs.readFileSync("./public/json/movie-data.json");
-let movies = JSON.parse(byteMovies);
+// let byteMovies = fs.readFileSync("./public/json/movie-data.json");
+// let movies = JSON.parse(byteMovies);
 // console.log(movies[0]);
 
 // An array to store user information
 let users = [];
-let userOnline;
+let userOnline = null;
+let people = [];
+let peopleId = 1;
 
 // Create application/json parser
 const jsonParser = bodyParser.json();
@@ -25,15 +28,29 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(cors());
 app.use(expressLayouts);
 app.use(express.static("public"));
-app.use('/css', express.static(__dirname + 'public/css'));
+// app.use('/css', express.static(__dirname + 'public/css'));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(
+  session({
+    secret: "secret-key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// This route does nothing
+app.route("/").get((req, res) => {});
 
 // LOGIN ROUTE
 app
   .route("/Login")
   .get((req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
+    if (userOnline != null) {
+      res.redirect("/Profile");
+    } else {
+      res.sendFile(__dirname + "/public/index.html");
+    }
   })
   .post(urlencodedParser, (req, res) => {
     // now, lets check if a username and password is in an the array of users.
@@ -45,7 +62,7 @@ app
           users[i].password === req.body.password
         ) {
           userOnline = users[i];
-          console.log("found the user.");
+          console.log(userOnline);
           bool = true;
           res.redirect("/Profile");
           break;
@@ -65,7 +82,12 @@ app
 app
   .route("/Register")
   .get((req, res) => {
-    res.sendFile(__dirname + "/public/sub-files/sign-up.html");
+    if (userOnline != null) {
+      console.log("got here");
+      res.redirect("/Profile");
+    } else {
+      res.sendFile(__dirname + "/public/sub-files/sign-up.html");
+    }
   })
   .post(urlencodedParser, (req, res) => {
     // will get a username, email, password
@@ -131,18 +153,19 @@ app.route("/users").get((req, res) => {
   var regExp = /[a-zA-Z]/g;
   let searchValue = req.query.search;
 
-  users.some(function(elem) {
+  users.some(function (elem) {
     console.log(elem); //result: "My","name"
 
     if (elem.username === req.query.search) {
       console.log("found the user!!!!!!!!", req.query.search);
       console.log(elem);
-      res.render("users", {name: elem.username, email: elem.email});
+      res.render("users", { name: elem.username, email: elem.email });
       return true;
-    }
-    else if (elem.username.toUpperCase().includes(searchValue.toUpperCase())){
+    } else if (
+      elem.username.toUpperCase().includes(searchValue.toUpperCase())
+    ) {
       console.log(elem);
-      res.render("users", {name: elem.username, email: elem.email});
+      res.render("users", { name: elem.username, email: elem.email });
       return true;
     }
     // else {
@@ -153,28 +176,27 @@ app.route("/users").get((req, res) => {
     return false;
   });
 
-    //
-    //
-    // for (let i = 0; i < users.length; i++) {
-    //   if (users[i].username === req.query.search) {
-    //     console.log("found the user!!!!!!!!", req.query.search);
-    //     console.log(users);
-    //     res.render("users", {name: users[i].username, email: users[i].email});
-    //     break;
-    //   }
-    //
-    //   else if (users[i].username.indexOf(req.query.search) > - 1){
-    //     console.log(users);
-    //     res.render("users", {name: users[i].username, email: users[i].email});
-    //     break;
-    //   }
-    //
-    //   else {
-    //       res.send("User Not found")
-    //       return true;
-    //     }
-    // }
-
+  //
+  //
+  // for (let i = 0; i < users.length; i++) {
+  //   if (users[i].username === req.query.search) {
+  //     console.log("found the user!!!!!!!!", req.query.search);
+  //     console.log(users);
+  //     res.render("users", {name: users[i].username, email: users[i].email});
+  //     break;
+  //   }
+  //
+  //   else if (users[i].username.indexOf(req.query.search) > - 1){
+  //     console.log(users);
+  //     res.render("users", {name: users[i].username, email: users[i].email});
+  //     break;
+  //   }
+  //
+  //   else {
+  //       res.send("User Not found")
+  //       return true;
+  //     }
+  // }
 });
 
 // UNIQUE MOVIE ROUTE
@@ -187,12 +209,16 @@ app.route("/users/:").get((req, res) => {
 app
   .route("/Profile")
   .get((req, res) => {
-    if (!userOnline.contributing_user) {
-      // We go to the normal user profile page
-      res.render("normal-user", userOnline);
+    if (userOnline == null) {
+      res.redirect("/Login");
     } else {
-      // We go to the contributing user profile page
-      res.render("contributing-user", userOnline);
+      if (!userOnline.contributing_user) {
+        // We go to the normal user profile page
+        res.render("normal-user", userOnline);
+      } else {
+        // We go to the contributing user profile page
+        res.render("contributing-user", userOnline);
+      }
     }
   })
   .post(urlencodedParser, (req, res) => {
@@ -208,6 +234,12 @@ app
     }
     res.redirect("/Profile");
   });
+
+app.route("/Logout").get((req, res) => {
+  userOnline = null;
+  console.log(userOnline);
+  res.redirect("/Login");
+});
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
