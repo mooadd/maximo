@@ -25,3 +25,11 @@
 .unique-movie-size {
   margin: 0 auto;
 }
+
+/* Creative card will be here */
+.creative-card {
+  /* border: 5px solid red; */
+  height: 500px;
+  /* width: 360px; */
+  border-radius: 20px;
+}

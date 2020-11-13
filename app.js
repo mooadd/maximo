@@ -9,8 +9,8 @@ const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 //const popup = require('popups');
 // Getting out json folder
-let byteMovies = fs.readFileSync("./public/json/movie-data.json");
-let movies = JSON.parse(byteMovies);
+// let byteMovies = fs.readFileSync("./public/json/movie-data.json");
+// let movies = JSON.parse(byteMovies);
 // console.log(movies[0]);
 
 // An array to store user information
@@ -28,7 +28,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(cors());
 app.use(expressLayouts);
 app.use(express.static("public"));
-app.use('/css', express.static(__dirname + 'public/css'));
+// app.use('/css', express.static(__dirname + 'public/css'));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(

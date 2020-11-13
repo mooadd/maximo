@@ -30,23 +30,35 @@
 
 <div class="container">
   <!-- This is the nav -->
-  <ul class="nav justify-content-between bg-light">
+  <ul class="nav justify-content-between bg-light align-items-center">
     <li class="nav-item">
       <h1>User: <%=username%></h1>
     </li>
 
-    <li class="nav-item">
-      <a class="nav-link" href="#">Logout</a>
-    </li>
+    <div class="d-flex flex-row align-items-center">
+      <form action="/Profile" method="POST">
+        <input
+          style="display: none"
+          type="text"
+          name="contributing_user"
+          value="contributing_user"
+        />
+        <button type="submit" class="btn btn-success">Contribute</button>
+      </form>
+
+      <li class="nav-item">
+        <a class="nav-link" href="#">Logout</a>
+      </li>
+    </div>
   </ul>
 
-  <div class="text-center my-4">
-    <div style="max-width: 600px">
+  <div class="my-4 row d-flex justify-content-center">
+    <div style="">
       <form
         action="/movies"
         name="search-theme-form"
         id="search-theme-form"
-        class="form-search"
+        class="form-search text-center form-search-bigger"
       >
         <div class="form-group search-stuff">
           <div class="input-group mb-3">
@@ -103,6 +115,24 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="creative-card bg-primary text-white">
+        <h2>Following</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="creative-card bg-info text-white">
+        <h2>Followers</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="creative-card bg-success text-white">
+        <h2>Movies for you</h2>
+      </div>
     </div>
   </div>
 </div>

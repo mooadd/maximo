@@ -22,6 +22,10 @@
   .unique-movie-size {
     width: 80%;
   }
+
+  .form-search-bigger {
+    width: 500px;
+  }
 }
 
 /* Large devices (desktops, 992px and up) */
