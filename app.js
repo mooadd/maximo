@@ -7,7 +7,7 @@ const app = express();
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
-
+//const popup = require('popups');
 // Getting out json folder
 let byteMovies = fs.readFileSync("./public/json/movie-data.json");
 let movies = JSON.parse(byteMovies);
@@ -28,6 +28,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(cors());
 app.use(expressLayouts);
 app.use(express.static("public"));
+app.use('/css', express.static(__dirname + 'public/css'));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(
@@ -142,7 +143,55 @@ app.route("/People").get((req, res) => {
 // USERS ROUTE
 app.route("/users").get((req, res) => {
   console.log("users route", req.query);
-  res.send("users");
+
+  let boolean = false;
+  var regExp = /[a-zA-Z]/g;
+  let searchValue = req.query.search;
+
+  users.some(function(elem) {
+    console.log(elem); //result: "My","name"
+
+    if (elem.username === req.query.search) {
+      console.log("found the user!!!!!!!!", req.query.search);
+      console.log(elem);
+      res.render("users", {name: elem.username, email: elem.email});
+      return true;
+    }
+    else if (elem.username.toUpperCase().includes(searchValue.toUpperCase())){
+      console.log(elem);
+      res.render("users", {name: elem.username, email: elem.email});
+      return true;
+    }
+    // else {
+    //   res.send("User Not found")
+    //   return true;
+    // }
+    //res.send("User Not Found")
+    return false;
+  });
+
+    //
+    //
+    // for (let i = 0; i < users.length; i++) {
+    //   if (users[i].username === req.query.search) {
+    //     console.log("found the user!!!!!!!!", req.query.search);
+    //     console.log(users);
+    //     res.render("users", {name: users[i].username, email: users[i].email});
+    //     break;
+    //   }
+    //
+    //   else if (users[i].username.indexOf(req.query.search) > - 1){
+    //     console.log(users);
+    //     res.render("users", {name: users[i].username, email: users[i].email});
+    //     break;
+    //   }
+    //
+    //   else {
+    //       res.send("User Not found")
+    //       return true;
+    //     }
+    // }
+
 });
 
 // UNIQUE MOVIE ROUTE

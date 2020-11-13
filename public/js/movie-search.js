@@ -1,6 +1,11 @@
 // Variables
 let frm = document.getElementById("search-theme-form");
 
+var button = document.getElementById('maximo-button');
+button.onclick = function() {
+  location.assign('/Login');
+}
+
 // These functions just change the dropdowns text.
 const changeToTitle = () => {
   $("#dropdown-button").text("Title");
@@ -34,3 +39,7 @@ const changeToUsers = () => {
   $("#texter").val("Users");
   frm.action = "/users";
 };
+
+const changeToHome = () => {
+  frm.action = "/Login";
+}
