@@ -122,11 +122,58 @@
     <div class="col-md-4">
       <div class="creative-card bg-primary text-white">
         <h2>Following</h2>
+
+        <ul class="list-group">
+          <% for (var i=0; i < following.length; i++) { %>
+          <form action="/users" id="my_form">
+            <input
+              style="display: none"
+              type="text"
+              name="search"
+              id="search"
+              value=<%=following[i]%>
+            />
+
+            <a
+              id="search-link"
+              class="list-group-item list-group-item-action list-group-item-light"
+              href="javascript:{}"
+              onclick="document.getElementById('my_form').submit(); return false;"
+            >
+              <%= following[i] %>
+            </a>
+          </form>
+
+          <% } %>
+        </ul>
       </div>
     </div>
     <div class="col-md-4">
       <div class="creative-card bg-info text-white">
         <h2>Followers</h2>
+        <ul class="list-group">
+          <% for (var i=0; i < followers.length; i++) { %>
+          <form action="/users" id="my_form">
+            <input
+              style="display: none"
+              type="text"
+              name="search"
+              id="search"
+              value=<%=followers[i]%>
+            />
+
+            <a
+              id="search-link"
+              class="list-group-item list-group-item-action list-group-item-light"
+              href="javascript:{}"
+              onclick="document.getElementById('my_form').submit(); return false;"
+            >
+              <%= followers[i] %>
+            </a>
+          </form>
+
+          <% } %>
+        </ul>
       </div>
     </div>
     <div class="col-md-4">

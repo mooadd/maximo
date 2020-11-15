@@ -16,6 +16,7 @@ const expressLayouts = require("express-ejs-layouts");
 // An array to store user information
 let users = [];
 let userOnline = null;
+let userSearched = null;
 let people = [];
 let peopleId = 1;
 
@@ -99,6 +100,8 @@ app
         password: req.body.password,
         contributing_user: false,
         following: [],
+        followers: [],
+        comments: [],
       });
       // If everything goes well. new user gets added to the array. we redirect
       // the user to the login page
@@ -115,19 +118,25 @@ app.route("/Reset-Password").get((req, res) => {
 });
 
 // MOVIE ROUTE
-app.route("/movies").get((req, res) => {
-  console.log(req.query);
+app
+  .route("/movies")
+  .get((req, res) => {
+    console.log(req.query);
 
-  // if (req.query.texter === "People") {
-  //   console.log("We are going to the people route");
-  //   res.redirect(`/People?name=${res.query.search}`);
-  // } else {
-  res.render("movies", {
-    texter: req.query.texter,
-    search: req.query.search,
+    // if (req.query.texter === "People") {
+    //   console.log("We are going to the people route");
+    //   res.redirect(`/People?name=${res.query.search}`);
+    // } else {
+    res.render("movies", {
+      texter: req.query.texter,
+      search: req.query.search,
+    });
+    // }
+  })
+  .post(urlencodedParser, (req, res) => {
+
+    console.log(req.body);
   });
-  // }
-});
 
 // UNIQUE MOVIE ROUTE
 app.route("/movies/:").get((req, res) => {
@@ -146,64 +155,82 @@ app.route("/People").get((req, res) => {
 });
 
 // USERS ROUTE
-app.route("/users").get((req, res) => {
-  console.log("users route", req.query);
+app
+  .route("/users")
+  .get((req, res) => {
+    console.log(req.query.search);
+    const usernameUpper = req.query.search.toUpperCase();
+    console.log(usernameUpper);
 
-  let boolean = false;
-  var regExp = /[a-zA-Z]/g;
-  let searchValue = req.query.search;
+    if (usernameUpper === userOnline.username.toUpperCase()) {
+      res.redirect("/Profile");
+    } else {
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].username.toUpperCase() === usernameUpper) {
+          userSearched = users[i];
 
-  users.some(function (elem) {
-    console.log(elem); //result: "My","name"
-
-    if (elem.username === req.query.search) {
-      console.log("found the user!!!!!!!!", req.query.search);
-      console.log(elem);
-      res.render("users", { name: elem.username, email: elem.email });
-      return true;
-    } else if (
-      elem.username.toUpperCase().includes(searchValue.toUpperCase())
-    ) {
-      console.log(elem);
-      res.render("users", { name: elem.username, email: elem.email });
-      return true;
+          if (userOnline.following.includes(users[i].username)) {
+            res.render("user-view", {
+              follow: "unfollow",
+              username: userOnline.username,
+              foundUser: users[i],
+            });
+          } else {
+            res.render("user-view", {
+              follow: "follow",
+              username: userOnline.username,
+              foundUser: users[i],
+            });
+          }
+        }
+      }
     }
-    // else {
-    //   res.send("User Not found")
-    //   return true;
+  })
+  .post(urlencodedParser, (req, res) => {
+    // userSearched.followers.push(userOnline.username);
+    // userOnline.following.push(userSearched.username);
+
+    // for (let i = 0; i < users.length; i++) {
+    //   if (users[i].username == userSearched.username) {
+    //     users[i] = userSearched;
+    //   }
+    //   if (users[i].username == userOnline.username) {
+    //     users[i] = userOnline;
+    //   }
     // }
-    //res.send("User Not Found")
-    return false;
+
+    if (req.body.follow === "follow") {
+      userSearched.followers.push(userOnline.username);
+      userOnline.following.push(userSearched.username);
+    } else {
+      let index = userSearched.followers.indexOf(userOnline.username);
+      userSearched.followers.splice(index, 1);
+
+      index = userOnline.following.indexOf(userSearched.username);
+      userOnline.following.splice(index, 1);
+    }
+
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username == userSearched.username) {
+        users[i] = userSearched;
+      }
+      if (users[i].username == userOnline.username) {
+        users[i] = userOnline;
+      }
+    }
+
+    console.log(req.body);
+    console.log("userOnline following", userOnline.following);
+
+    res.redirect("/Profile");
   });
 
-  //
-  //
-  // for (let i = 0; i < users.length; i++) {
-  //   if (users[i].username === req.query.search) {
-  //     console.log("found the user!!!!!!!!", req.query.search);
-  //     console.log(users);
-  //     res.render("users", {name: users[i].username, email: users[i].email});
-  //     break;
-  //   }
-  //
-  //   else if (users[i].username.indexOf(req.query.search) > - 1){
-  //     console.log(users);
-  //     res.render("users", {name: users[i].username, email: users[i].email});
-  //     break;
-  //   }
-  //
-  //   else {
-  //       res.send("User Not found")
-  //       return true;
-  //     }
-  // }
-});
-
 // UNIQUE MOVIE ROUTE
-app.route("/users/:").get((req, res) => {
-  console.log("the unique user id is", req.query);
-  res.send("<h1>This hasn't been done yet</h1>");
-});
+// .app.route("/users/:")
+// .get((req, res) => {
+//   console.log("the unique user id is", req.query);
+//   res.send("<h1>This hasn't been done yet</h1>");
+// });
 
 // PROFILE ROUTE
 app
@@ -235,11 +262,17 @@ app
     res.redirect("/Profile");
   });
 
+// LOGOUT ROUTE
 app.route("/Logout").get((req, res) => {
   userOnline = null;
   console.log(userOnline);
   res.redirect("/Login");
 });
+
+app.route("/add-movie").get((req, res) => {
+  res.render("movie-add", userOnline);
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
