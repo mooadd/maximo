@@ -1,0 +1,52 @@
+<div class="container">
+  <!-- This is the nav -->
+  <ul class="nav justify-content-between bg-light align-items-center">
+    <li class="nav-item">
+      <h1>User: <%=username%></h1>
+    </li>
+
+    <div class="d-flex flex-row align-items-center">
+      <form action="/Profile" method="POST">
+        <input
+          style="display: none"
+          type="text"
+          name="contributing_user"
+          value="contributing_user"
+        />
+        <button type="submit" class="btn btn-success">Contribute</button>
+      </form>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/Logout">Logout</a>
+      </li>
+    </div>
+  </ul>
+
+  <!-- We add stuff here -->
+  <div class="text-center my-4">
+    <div class="text-center">
+      <h1><%= name %></h1>
+
+      <form action="/People" method="POST">
+        <button type="submit" class="btn btn-outline-success">
+          <%= follow %>
+        </button>
+
+        <% if (follow === 'follow') {%>
+
+        <input style="display: none" type="text" name="follow" value="follow" />
+
+        <% } else { %>
+
+        <input
+          style="display: none"
+          type="text"
+          name="follow"
+          value="unfollow"
+        />
+
+        <% }%>
+      </form>
+    </div>
+  </div>
+</div>

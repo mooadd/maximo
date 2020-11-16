@@ -3,10 +3,12 @@ const express = require("express");
 const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
+const fetch = require("node-fetch");
 const app = express();
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
+const { dir } = require("console");
 //const popup = require('popups');
 // Getting out json folder
 // let byteMovies = fs.readFileSync("./public/json/movie-data.json");
@@ -17,8 +19,36 @@ const expressLayouts = require("express-ejs-layouts");
 let users = [];
 let userOnline = null;
 let userSearched = null;
+let personSearched = null;
+
+// People stuff. Populating it.
 let people = [];
-let peopleId = 1;
+const data = fs.readFileSync("./public/json/movie-data.json");
+let movies = JSON.parse(data);
+for (let i = 0; i < movies.length; i++) {
+  let actors = movies[i].Actors.split(",");
+  let director = movies[i].Director;
+  let writers = movies[i].Writer.split(/[,]+/);
+
+  for (let i = 0; i < actors.length; i++) {
+    if (!people.includes(actors[i])) {
+      people.push(actors[i]);
+    }
+  }
+
+  if (!people.includes(director)) {
+    people.push(director);
+  }
+
+  // I will get to this some other day. for now, actors and directors
+  // for (let i = 0; i < writers.length; i++) {
+  //   if (!people.includes(writers[i])) {
+  //     people.push(writers[i]);
+  //   }
+  // }
+
+  // console.log(people);
+}
 
 // Create application/json parser
 const jsonParser = bodyParser.json();
@@ -101,6 +131,7 @@ app
         contributing_user: false,
         following: [],
         followers: [],
+        peopleFollowing: [],
         comments: [],
       });
       // If everything goes well. new user gets added to the array. we redirect
@@ -146,12 +177,50 @@ app.route("/movies/:").get((req, res) => {
 });
 
 // PEOPLE ROUTE
-app.route("/People").get((req, res) => {
-  console.log("the unique person is", req.query);
-  res.render("people", {
-    search: req.query.search,
+app
+  .route("/People")
+  .get((req, res) => {
+    console.log("the unique person is", req.query);
+
+    if (!people.includes(req.query.search)) {
+      res.redirect("/Profile");
+    } else {
+      let index = people.indexOf(req.query.search);
+      personSearched = req.query.search;
+      if (userOnline.peopleFollowing.includes(req.query.search)) {
+        res.render("person", {
+          follow: "unfollow",
+          username: userOnline.username,
+          name: req.query.search,
+        });
+      } else {
+        res.render("person", {
+          follow: "follow",
+          username: userOnline.username,
+          name: req.query.search,
+        });
+      }
+    }
+  })
+  .post(urlencodedParser, (req, res) => {
+    if (req.body.follow === "follow") {
+      userOnline.peopleFollowing.push(personSearched);
+    } else {
+      index = userOnline.peopleFollowing.indexOf(personSearched);
+      userOnline.peopleFollowing.splice(index, 1);
+    }
+
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username == userOnline.username) {
+        users[i] = userOnline;
+      }
+    }
+
+    console.log(req.body);
+    console.log("userOnline people following", userOnline.peopleFollowing);
+
+    res.redirect("/Profile");
   });
-});
 
 // USERS ROUTE
 app
