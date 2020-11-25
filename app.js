@@ -27,6 +27,19 @@ let users = [
     followers: [],
     peopleFollowing: [],
     comments: [],
+    ratings: [],
+  },
+  {
+    id: 1,
+    username: "jamie",
+    email: "jamie@jones",
+    password: "jamie",
+    contributing_user: true,
+    following: [],
+    followers: [],
+    peopleFollowing: [],
+    comments: [],
+    ratings: [],
   },
 ];
 let userOnline = null;
@@ -220,7 +233,7 @@ app
       Runtime: req.body.Runtime,
       Year: req.body.releaseyear,
       Director: req.body.dir,
-      Writers: "",
+      Writer: "",
     };
 
     // let stringedMovie = JSON.stringify(movieObject, null, 2);
@@ -432,10 +445,12 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
   } else {
     let comment = req.body.comment;
     let movieId = req.body.id;
+    let movieTitle = req.body.title;
 
     let commentObj = {
       id: movieId,
       comment: comment,
+      title: movieTitle,
     };
     movieComments.push(commentObj);
 
@@ -446,13 +461,33 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
         users[i] = userOnline;
       }
     }
+
+    res.redirect("/Profile");
   }
 });
 
 app.route("/rating").post(urlencodedParser, (req, res) => {
   console.log("got to the rating stuff");
+  console.log(req.body)
   let rating = req.body.rating;
   let movieId = req.body.id;
+  let title = req.body.title;
+
+  ratingObj = {
+    rating: rating,
+    id: movieId,
+    title: title,
+  }
+  userOnline.ratings.push(ratingObj);
+  movieRatings.push(ratingObj)
+
+  for (let i = 0; i < users.length; i++) {
+    if (users.username === userOnline.username) {
+      users[i] = userOnline;
+    }
+  }
+
+  res.redirect("/Profile");
 
   // Finish this stuff off
 });

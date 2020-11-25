@@ -29,7 +29,7 @@
 /* Creative card will be here */
 .creative-card {
   /* border: 5px solid red; */
-  height: 500px;
+  min-height: 300px;
   /* width: 360px; */
   border-radius: 20px;
 }

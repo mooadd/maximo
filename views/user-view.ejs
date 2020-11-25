@@ -48,9 +48,117 @@
         <% }%>
       </form>
     </div>
+  </div>
 
-    <h1>TODO. FINISH THIS BY TONIGHT</h1>
-    <h1>See who the user is following</h1>
-    <h1>And ssee a list of all the review this user has made</h1>
+  <!-- Person user stuff -->
+
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="creative-card bg-primary text-white">
+        <h2>Followed</h2>
+
+        <ul class="list-group">
+          <% for (var i=0; i < foundUser.following.length; i++) { %>
+          <form action="/users" id="my_form">
+            <input
+              style="display: none"
+              type="text"
+              name="search"
+              id="search"
+              value=<%=foundUser.following[i]%>
+            />
+
+            <a
+              id="search-link"
+              class="list-group-item list-group-item-action list-group-item-light"
+              href="javascript:{}"
+              onclick="document.getElementById('my_form').submit(); return false;"
+            >
+            <%=foundUser.following[i]%>
+            </a>
+          </form>
+
+          <% } %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="creative-card bg-primary text-white">
+        <h2>Reviews</h2>
+
+        <div class="row my-4">
+
+          <div class="col-md-4">
+            <h4>Movie Ratings</h4>
+
+            <ul class="list-group">
+              <% for (var i=0; i < foundUser.ratings.length; i++) { %>
+              <form action="/movies/:" id="my_form">
+                <input
+                  style="display: none"
+                  type="text"
+                  name="movie_id"
+                  id="movie_id"
+                  value=<%=foundUser.ratings[i].id%>
+                />
+
+
+                <div class="flex row bg-light">
+                  <a
+                    id="search-link"
+                    class=""
+                    href="javascript:{}"
+                    onclick="document.getElementById('my_form').submit(); return false;"
+                  >
+                  Movie title: <%=foundUser.ratings[i].title%>
+                  </a>
+                  <p class="text-muted">Rating: <%=foundUser.ratings[i].rating%> / 5</p>
+                </div>
+
+
+              </form>
+
+              <% } %>
+            </ul>
+          </div>
+          <div class="col-md-8">
+            <h4>Movie comments</h4>
+
+            <!-- Here we loop over the movie comments made by this user. -->
+            <ul class="list-group">
+              <% for (var i=0; i < foundUser.comments.length; i++) { %>
+              <form action="/movies/:" id="my_form">
+                <input
+                  style="display: none"
+                  type="text"
+                  name="movie_id"
+                  id="movie_id"
+                  value=<%=foundUser.comments[i].id%>
+                />
+
+
+                <div class="flex row bg-light">
+                  <a
+                    id="search-link"
+                    class=""
+                    href="javascript:{}"
+                    onclick="document.getElementById('my_form').submit(); return false;"
+                  >
+                  Movie title: <%=foundUser.comments[i].title%>
+                  </a>
+                  <p class="text-muted"><%=foundUser.comments[i].comment%></p>
+                </div>
+
+
+              </form>
+
+              <% } %>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
