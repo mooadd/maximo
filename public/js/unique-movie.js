@@ -5,6 +5,11 @@ let movie_id = $("#unique-movie-thing").html();
 
 // Functions
 
+// Rating Initialization
+$(document).ready(function () {
+  $("#rateMe4").mdbRate();
+});
+
 /**
  * @description determine if an array contains one or more items from another array.
  * @param {array} haystack the array to search.
@@ -170,6 +175,24 @@ fetch(`../json/movie-data.json`)
                           ${outputVariable}
                         </div>
                       </div>
+                  </div>
+
+                  <div>
+                    <form class="my-4" action="/add-comment" method="POST">
+                      <h4>Comments</h4>
+                      <hr>
+
+                      <div class="form-group">
+                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                        <input style="display:none" type='text' name="id" value=${movie_id}>
+                        <div class="d-flex flex-row-reverse my-2">
+                          <button type="submit" class="btn btn-secondary">Add comment</button>
+                        </div>
+
+
+                      </div>
+                    </form>
+
                   </div>
               </div>
             </div>

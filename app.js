@@ -16,10 +16,28 @@ const { dir } = require("console");
 // console.log(movies[0]);
 
 // An array to store user information
-let users = [];
+let users = [
+  {
+    id: 1,
+    username: "abdi",
+    email: "abdi@abdi",
+    password: "abdi",
+    contributing_user: true,
+    following: [],
+    followers: [],
+    peopleFollowing: [],
+    comments: [],
+  },
+];
 let userOnline = null;
 let userSearched = null;
 let personSearched = null;
+
+// const commentData = fs.readFileSync("./public/json/movie-comments.json");
+// let comments = JSON.parse(commentData);
+
+let movieComments = [];
+let movieRatings = [];
 
 // People stuff. Populating it.
 let people = [];
@@ -28,7 +46,7 @@ let movies = JSON.parse(data);
 for (let i = 0; i < movies.length; i++) {
   let actors = movies[i].Actors.split(",");
   let director = movies[i].Director;
-  let writers = movies[i].Writer.split(/[,]+/);
+  // let writers = movies[i].Writer.split(/[,]+/);
 
   for (let i = 0; i < actors.length; i++) {
     if (!people.includes(actors[i])) {
@@ -133,6 +151,7 @@ app
         followers: [],
         peopleFollowing: [],
         comments: [],
+        ratings: [],
       });
       // If everything goes well. new user gets added to the array. we redirect
       // the user to the login page
@@ -166,6 +185,58 @@ app
   })
   .post(urlencodedParser, (req, res) => {
     console.log(req.body);
+
+    let title = req.body.Title;
+    let actors = req.body.Actors.split(",");
+    let genres = req.body.Genres;
+    let languages = req.body.Languages;
+    let runtime = req.body.Runtime;
+    let releaseYear = req.body.releaseyear;
+    let rated = req.body.Rated;
+    let plot = req.body.Plot;
+    let image = req.body.Image;
+    let dir = req.body.dir;
+
+    for (let i = 0; i < actors.length; i++) {
+      if (!people.includes(actors[i])) {
+        people.push(actors[i]);
+      }
+    }
+
+    if (!people.includes(dir)) {
+      people.push(dir);
+    }
+
+    // now we just add to the database
+
+    let movieObject = {
+      Actors: req.body.Actors,
+      Title: req.body.Title,
+      Genre: req.body.Genres,
+      Language: req.body.Languages,
+      Rated: req.body.Rated,
+      Plot: req.body.Plot,
+      Poster: req.body.Image,
+      Runtime: req.body.Runtime,
+      Year: req.body.releaseyear,
+      Director: req.body.dir,
+      Writers: "",
+    };
+
+    // let stringedMovie = JSON.stringify(movieObject, null, 2);
+
+    movies.push(movieObject);
+
+    fs.writeFile(
+      "./public/json/movie-data.json",
+      JSON.stringify(movies, null, 2),
+      finished
+    );
+    res.redirect("/Profile");
+
+    function finished(err) {
+      console.log("all set");
+    }
   });
 
 // UNIQUE MOVIE ROUTE
@@ -341,6 +412,50 @@ app.route("/add-movie").get((req, res) => {
   res.render("movie-add", userOnline);
 });
 
+app
+  .route("/add-person")
+  .get((req, res) => {
+    res.render("person-add", userOnline);
+  })
+  .post(urlencodedParser, (req, res) => {
+    console.log(req.body);
+
+    if (!people.includes(req.body.name)) {
+      people.push(req.body.name);
+    }
+    res.redirect("/Profile");
+  });
+
+app.route("/add-comment").post(urlencodedParser, (req, res) => {
+  if (userOnline === null) {
+    res.redirect("/Login"); // Fix this
+  } else {
+    let comment = req.body.comment;
+    let movieId = req.body.id;
+
+    let commentObj = {
+      id: movieId,
+      comment: comment,
+    };
+    movieComments.push(commentObj);
+
+    userOnline.comments.push(commentObj);
+    // now lets update that for the users
+    for (let i = 0; i < users.length; i++) {
+      if (users.username === userOnline.username) {
+        users[i] = userOnline;
+      }
+    }
+  }
+});
+
+app.route("/rating").post(urlencodedParser, (req, res) => {
+  console.log("got to the rating stuff");
+  let rating = req.body.rating;
+  let movieId = req.body.id;
+
+  // Finish this stuff off
+});
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

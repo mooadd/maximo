@@ -1,0 +1,36 @@
+<div class="container">
+  <!-- This is the nav -->
+  <ul class="nav justify-content-between bg-light align-items-center">
+    <li class="nav-item">
+      <h1>User: <%=username%></h1>
+    </li>
+
+    <div class="d-flex flex-row align-items-center">
+      <li class="nav-item">
+        <a class="nav-link" href="/Logout">Logout</a>
+      </li>
+    </div>
+  </ul>
+
+  <div class="add-person-card">
+    <h1 class="text-center">Add a person</h1>
+    <hr />
+
+    <form action="/add-person" method="POST">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" />
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-secondary btn-lg btn-block"
+        id="add-movie-button"
+      >
+        Add Person
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="js/show-upload.js"></script>
