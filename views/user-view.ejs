@@ -22,6 +22,7 @@
     </div>
   </ul>
 
+  <!-- THIS IS YOUR JOB MUAADH. MAKE THIS LOOK NICE -->
   <!-- We add stuff here -->
   <div class="text-center my-4">
     <div class="text-center">
@@ -92,9 +93,12 @@
           <div class="col-md-4">
             <h4>Movie Ratings</h4>
 
+            <!-- Here we loop over the movie ratings made by this user. -->
             <ul class="list-group">
               <% for (var i=0; i < foundUser.ratings.length; i++) { %>
               <form action="/movies/:" id="my_form">
+
+                <!-- This is hidden from the users view -->
                 <input
                   style="display: none"
                   type="text"
@@ -129,6 +133,8 @@
             <ul class="list-group">
               <% for (var i=0; i < foundUser.comments.length; i++) { %>
               <form action="/movies/:" id="my_form">
+
+                 <!-- This is hidden from the users view -->
                 <input
                   style="display: none"
                   type="text"
