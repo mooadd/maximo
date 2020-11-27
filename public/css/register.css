@@ -56,3 +56,53 @@
   box-shadow: 0px 0px #717a33;
   top: 4px;
 }
+
+p.text-muted {
+  color: #687e00
+
+}
+
+
+.middle {
+  font-weight: bold;
+  border: 3px solid #4ABBFF;
+
+}
+
+.movie{
+  width: 200px;
+  margin-left: 10px;
+}
+
+.shrink{
+  width: 450px;
+}
+
+
+body {
+  background-color: #121212;
+  cursor: none !important;
+  /* overflow: hidden; */
+}
+
+/* React Component CSS */
+
+.cursor {
+  width: 4px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 11;
+  transition-duration: 1.2s;
+  transition-timing-function:  cubic-bezier(0.07, 1.18, 1, 1);
+}
+.cursor-follower {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #ffffff;
+  border-radius: 100px;
+  transition-duration: 0.1s;
+  transition-timing-function:  cubic-bezier(0.07, 1.18, 1, 1);
+}

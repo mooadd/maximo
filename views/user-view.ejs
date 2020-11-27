@@ -58,7 +58,7 @@
       <div class="creative-card bg-primary text-white">
         <h2>Followed</h2>
 
-        <ul class="list-group">
+        <ul class="list-group middle">
           <% for (var i=0; i < foundUser.following.length; i++) { %>
           <form action="/users" id="my_form">
             <input
@@ -94,7 +94,7 @@
             <h4>Movie Ratings</h4>
 
             <!-- Here we loop over the movie ratings made by this user. -->
-            <ul class="list-group">
+            <ul class="list-group movie">
               <% for (var i=0; i < foundUser.ratings.length; i++) { %>
               <form action="/movies/:" id="my_form">
 
@@ -108,7 +108,7 @@
                 />
 
 
-                <div class="flex row bg-light">
+                <div class="flex row bg-light middle movie ">
                   <a
                     id="search-link"
                     class=""
@@ -117,7 +117,7 @@
                   >
                   Movie title: <%=foundUser.ratings[i].title%>
                   </a>
-                  <p class="text-muted">Rating: <%=foundUser.ratings[i].rating%> / 5</p>
+                  <p class="text-muted colour"> <br> Rating: <%=foundUser.ratings[i].rating%> / 5</p>
                 </div>
 
 
@@ -130,7 +130,7 @@
             <h4>Movie comments</h4>
 
             <!-- Here we loop over the movie comments made by this user. -->
-            <ul class="list-group">
+            <ul class="list-group shrink">
               <% for (var i=0; i < foundUser.comments.length; i++) { %>
               <form action="/movies/:" id="my_form">
 
@@ -144,7 +144,7 @@
                 />
 
 
-                <div class="flex row bg-light">
+                <div class="flex row bg-light middle">
                   <a
                     id="search-link"
                     class=""
@@ -153,7 +153,7 @@
                   >
                   Movie title: <%=foundUser.comments[i].title%>
                   </a>
-                  <p class="text-muted"><%=foundUser.comments[i].comment%></p>
+                  <p class="text-muted"> &nbsp;&nbsp;<%=foundUser.comments[i].comment%></p>
                 </div>
 
 
@@ -161,6 +161,9 @@
 
               <% } %>
             </ul>
+
+
+
 
           </div>
         </div>
