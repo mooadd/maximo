@@ -83,7 +83,7 @@ const titleOutput = (dataObject, searchValue) => {
             <div class="col-md-3">
               <div class="well text-center">
                 <img src="${dataObject[i].Poster}">
-                <h5>${dataObject[i].Title}</h5>
+                <h5 style="color:yellow;>${dataObject[i].Title}</h5>
                 <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Movie Details
                 </a>
@@ -155,7 +155,7 @@ fetch(`../json/movie-data.json`)
             <div class="unique-movie-size">
               <div class="well text-center">
                 <img src="${desiredObject.Poster}">
-                <h5>${desiredObject.Title}</h5>
+                <h5 style="color:yellow;>${desiredObject.Title}</h5>
                   <div class="card card-body">
                     <p>${desiredObject.Plot}<p>
                     <p>Maximo rating: 0<p>

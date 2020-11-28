@@ -208,10 +208,10 @@
 
   <div class="row text-center">
     <div class="col-md-4">
-      <div class="creative-card bg-primary text-white">
+      <div class="creative-card bg-primary text-white middle">
         <h2>Following</h2>
 
-        <ul class="list-group">
+        <ul class="list-group middle">
           <% for (var i=0; i < following.length; i++) { %>
           <form action="/users" id="my_form">
             <input
@@ -237,9 +237,9 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="creative-card bg-info text-white">
+      <div class="creative-card bg-info text-white middle">
         <h2>Followers</h2>
-        <ul class="list-group">
+        <ul class="list-group middle">
           <% for (var i=0; i < followers.length; i++) { %>
           <form action="/users" id="my_form">
             <input
@@ -265,8 +265,11 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="creative-card bg-success text-white">
+      <div class="creative-card bg-success text-white middle">
         <h2>Movies for you</h2>
+        <ul class= "middle">
+
+        </ul>
       </div>
     </div>
   </div>

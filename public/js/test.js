@@ -5,7 +5,7 @@
 
   function generateStar(canvas, ctx, starRadius){
 			ctx.beginPath();
-			ctx.arc(starRadius + (Math.random() * canvas.width), starRadius + (Math.random() * canvas.height), starRadius*Math.random(), 0, Math.PI*2, false);
+			ctx.arc(starRadius + (Math.random() * canvas.width ), starRadius + (Math.random() * canvas.height), starRadius*Math.random(), 0, Math.PI*2, false);
       //ctx.arc(100, 30, starRadius, 0, Math.PI*2, false);
 
       var rand = Math.random();

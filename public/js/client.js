@@ -20,7 +20,7 @@ const titleOutput = (dataObject, searchValue) => {
             <div class="col-md-3">
               <div class="well text-center">
                 <img src="${dataObject[i].Poster}">
-                <h5>${dataObject[i].Title}</h5>
+                <h5 style="color:yellow;">${dataObject[i].Title}</h5>
                 <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Movie Details
                 </a>
@@ -61,7 +61,7 @@ const genreOutput = (dataObject, searchValue) => {
             <div class="col-md-3">
               <div class="well text-center">
                 <img src="${dataObject[i].Poster}">
-                <h5>${dataObject[i].Title}</h5>
+                <h5 style="color:yellow;">${dataObject[i].Title}</h5>
                 <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Movie Details
                 </a>
@@ -102,7 +102,7 @@ const yearOutput = (dataObject, searchValue) => {
             <div class="col-md-3">
               <div class="well text-center">
                 <img src="${dataObject[i].Poster}">
-                <h5>${dataObject[i].Title}</h5>
+                <h5 style="color:yellow;">${dataObject[i].Title}</h5>
                 <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Movie Details
                 </a>
@@ -143,7 +143,7 @@ const minRatingOutput = (dataObject, searchValue) => {
             <div class="col-md-3">
               <div class="well text-center">
                 <img src="${dataObject[i].Poster}">
-                <h5>${dataObject[i].Title}</h5>
+                <h5 style="color:yellow;">${dataObject[i].Title}</h5>
                 <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Movie Details
                 </a>
