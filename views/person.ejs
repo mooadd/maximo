@@ -3,7 +3,6 @@
   <li id="name"><%= name %></li>
 </ul>
 
-
 <div class="container">
   <!-- This is the nav -->
   <ul class="nav justify-content-between bg-light align-items-center">
@@ -57,8 +56,6 @@
   </div>
 </div>
 
-
-
 <div class="container">
   <h1 class="lead">Movies <%= name %> was in</h1>
   <div id="movies" class="row">
@@ -66,7 +63,13 @@
   </div>
 </div>
 
-
+<div class="container">
+  <h1>People this guy worked with a ton</h1>
+  <div id="people-worked" class="row">
+    <!-- Output will be populated over here depending on differen't stuff -->
+  </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="/js/person-movies.js"></script>
+<script src="/js/person-collab.js"></script>

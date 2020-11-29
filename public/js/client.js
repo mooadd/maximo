@@ -6,14 +6,33 @@ let searchValue = $("#search").html();
 
 // Functions
 
+// This function gets the average rating.
+// Takes a select movie at a parameter
+const getAverageRating = (movie) => {
+  let averageRating;
+  if (movie.Ratings.length < 1) {
+    // This means that there was no rating added yet
+    // so we give it an average movie rating of 0
+    averageRating = 0;
+  } else {
+    // lets find the average
+    let ratingSum = 0;
+    for (let z = 0; z < movie.Ratings.length; z++) {
+      ratingSum += parseInt(movie.Ratings[z]);
+    }
+
+    averageRating = ratingSum / movie.Ratings.length;
+  }
+  return averageRating;
+};
+
 const titleOutput = (dataObject, searchValue) => {
   let output = "";
   // We return stuff;
   //   return "<h1>My name is jeff<h1>";
   for (let i = 0; i < dataObject.length; i++) {
-    // console.log('what is up')
-    // Old if block "dataObject[i].Title.toUpperCase().indexOf(searchValue.toUpperCase()) != -1"
-    // Second if block "dataObject[i].Title.toUpperCase().includes(searchValue.toUpperCase())"
+    let averageRating = getAverageRating(dataObject[i]);
+
     if (dataObject[i].Title.toUpperCase().includes(searchValue.toUpperCase())) {
       console.log(dataObject[i]);
       output += `
@@ -27,7 +46,7 @@ const titleOutput = (dataObject, searchValue) => {
                 <div class="collapse" id="collapseExample${i}">
                   <div class="card card-body">
                     <p>${dataObject[i].Plot}<p>
-                    <p>Maximo rating: 0<p>
+                    <p>Maximo rating: ${averageRating}<p>
                     <p class="">Runtime: ${dataObject[i].Runtime}<p>
                     <p class="">Release year: ${dataObject[i].Year}<p>
                     <form action="/movies/:">
@@ -52,9 +71,7 @@ const genreOutput = (dataObject, searchValue) => {
   // We return stuff;
   //   return "<h1>My name is jeff<h1>";
   for (let i = 0; i < dataObject.length; i++) {
-    // console.log('what is up')
-    // Old if block "dataObject[i].Title.toUpperCase().indexOf(searchValue.toUpperCase()) != -1"
-    // Second if block "dataObject[i].Title.toUpperCase().includes(searchValue.toUpperCase())"
+    let averageRating = getAverageRating(dataObject[i]);
     if (dataObject[i].Genre.toUpperCase().includes(searchValue.toUpperCase())) {
       console.log(dataObject[i]);
       output += `
@@ -68,7 +85,7 @@ const genreOutput = (dataObject, searchValue) => {
                 <div class="collapse" id="collapseExample${i}">
                   <div class="card card-body">
                     <p>${dataObject[i].Plot}<p>
-                    <p>Maximo rating: 0<p>
+                    <p>Maximo rating: ${averageRating}<p>
                     <p class="">Runtime: ${dataObject[i].Runtime}<p>
                     <p class="">Release year: ${dataObject[i].Year}<p>
                     <form action="/movies/:">
@@ -93,9 +110,7 @@ const yearOutput = (dataObject, searchValue) => {
   // We return stuff;
   //   return "<h1>My name is jeff<h1>";
   for (let i = 0; i < dataObject.length; i++) {
-    // console.log('what is up')
-    // Old if block "dataObject[i].Title.toUpperCase().indexOf(searchValue.toUpperCase()) != -1"
-    // Second if block "dataObject[i].Title.toUpperCase().includes(searchValue.toUpperCase())"
+    let averageRating = getAverageRating(dataObject[i]);
     if (dataObject[i].Year == searchValue) {
       console.log(dataObject[i]);
       output += `
@@ -109,7 +124,7 @@ const yearOutput = (dataObject, searchValue) => {
                 <div class="collapse" id="collapseExample${i}">
                   <div class="card card-body">
                     <p>${dataObject[i].Plot}<p>
-                    <p>Maximo rating: 0<p>
+                    <p>Maximo rating: ${averageRating}<p>
                     <p class="">Runtime: ${dataObject[i].Runtime}<p>
                     <p class="">Release year: ${dataObject[i].Year}<p>
                     <form action="/movies/:">
@@ -134,12 +149,11 @@ const minRatingOutput = (dataObject, searchValue) => {
   // We return stuff;
   //   return "<h1>My name is jeff<h1>";
   for (let i = 0; i < dataObject.length; i++) {
-    // console.log('what is up')
-    // Old if block "dataObject[i].Title.toUpperCase().indexOf(searchValue.toUpperCase()) != -1"
-    // Second if block "dataObject[i].Title.toUpperCase().includes(searchValue.toUpperCase())"
-    // if (dataObject[i].Year == searchValue) {
-    console.log(dataObject[i]);
-    output += `
+    let averageRating = getAverageRating(dataObject[i]);
+
+    if (averageRating == searchValue) {
+      console.log(dataObject[i]);
+      output += `
             <div class="col-md-3">
               <div class="well text-center">
                 <img src="${dataObject[i].Poster}">
@@ -150,7 +164,7 @@ const minRatingOutput = (dataObject, searchValue) => {
                 <div class="collapse" id="collapseExample${i}">
                   <div class="card card-body">
                     <p>${dataObject[i].Plot}<p>
-                    <p>Maximo rating: 0<p>
+                    <p>Maximo rating: ${averageRating}<p>
                     <p class="">Runtime: ${dataObject[i].Runtime}<p>
                     <p class="">Release year: ${dataObject[i].Year}<p>
                     <form action="/movies/:">
@@ -164,6 +178,7 @@ const minRatingOutput = (dataObject, searchValue) => {
               </div>
             </div>
           `;
+    }
   }
 
   return output;

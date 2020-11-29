@@ -150,6 +150,27 @@ fetch(`../json/movie-data.json`)
 
     // console.log("output variable equals:", outputVariable);
     let output = "";
+    let comments = "";
+    let rating;
+
+    // Add to the comments
+    for (let i = 0; i < desiredObject.Comments.length; i++) {
+      comments += "<p>";
+      comments += desiredObject.Comments[i];
+      comments += "<p>";
+    }
+
+    if (desiredObject.Ratings.length < 1) {
+      rating = 0;
+    } else {
+      // get the average rating
+      let ratingSum = 0;
+      for (let i = 0; i < desiredObject.Ratings.length; i++) {
+        ratingSum += parseInt(desiredObject.Ratings[i]);
+      }
+
+      rating = ratingSum / desiredObject.Ratings.length;
+    }
 
     output += `
             <div class="unique-movie-size">
@@ -158,7 +179,7 @@ fetch(`../json/movie-data.json`)
                 <h5 style="color:yellow;>${desiredObject.Title}</h5>
                   <div class="card card-body">
                     <p>${desiredObject.Plot}<p>
-                    <p>Maximo rating: 0<p>
+                    <p>${rating}<p>
                     <p class="">Runtime: ${desiredObject.Runtime}<p>
                     <p class="">Release year: ${desiredObject.Year}<p>
                     <p class="">Director: ${desiredObject.Director}<p>
@@ -192,7 +213,13 @@ fetch(`../json/movie-data.json`)
 
 
                       </div>
+
+                      
                     </form>
+
+                    <div style="background: red;" class="">
+                      ${comments}
+                    </div>
 
                   </div>
               </div>
@@ -202,7 +229,7 @@ fetch(`../json/movie-data.json`)
 
     $("#movies").html(output);
 
-    $("#title").val(desiredObject.Title)
+    $("#title").val(desiredObject.Title);
   })
   .catch((err) => {
     console.log(err);

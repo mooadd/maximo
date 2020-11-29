@@ -1,8 +1,5 @@
 let nameValue = $("#name").text();
 
-
-
-
 const nameOutput = (dataObject, nameValue) => {
   let output = "";
   // We return stuff;
@@ -11,13 +8,17 @@ const nameOutput = (dataObject, nameValue) => {
     // console.log('what is up')
     // Old if block "dataObject[i].Title.toUpperCase().indexOf(searchValue.toUpperCase()) != -1"
     // Second if block "dataObject[i].Title.toUpperCase().includes(searchValue.toUpperCase())"
-    if (dataObject[i].Director === nameValue || dataObject[i].Actors.includes(nameValue) || dataObject[i].Writer.includes(nameValue)) {
+    if (
+      dataObject[i].Director === nameValue ||
+      dataObject[i].Actors.includes(nameValue) ||
+      dataObject[i].Writer.includes(nameValue)
+    ) {
       console.log(dataObject[i]);
       output += `
             <div class="col-md-3">
               <div class="well text-center">
                 <img src="${dataObject[i].Poster}">
-                <h5 style="color:yellow;>${dataObject[i].Title}</h5>
+                <h5 style="color:yellow";>${dataObject[i].Title}</h5>
                 <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Movie Details
                 </a>
@@ -44,8 +45,6 @@ const nameOutput = (dataObject, nameValue) => {
   return output;
 };
 
-
-
 // We do some fetch request.
 fetch(`../json/movie-data.json`)
   .then((response) => {
@@ -55,8 +54,7 @@ fetch(`../json/movie-data.json`)
     console.log(data);
     let output = "";
 
-      output = nameOutput(data, nameValue);
-
+    output = nameOutput(data, nameValue);
 
     $("#movies").html(output);
   })

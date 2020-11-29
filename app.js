@@ -234,6 +234,8 @@ app
       Year: req.body.releaseyear,
       Director: req.body.dir,
       Writer: "",
+      Comments: [],
+      Ratings: [],
     };
 
     // let stringedMovie = JSON.stringify(movieObject, null, 2);
@@ -440,6 +442,7 @@ app
   });
 
 app.route("/add-comment").post(urlencodedParser, (req, res) => {
+  console.log(req.body);
   if (userOnline === null) {
     res.redirect("/Login"); // Fix this
   } else {
@@ -462,13 +465,27 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
       }
     }
 
+    // Lets add the comment to the movie comments
+
+    movies[movieId].Comments.push(req.body.comment); // We added a comment to this movie
+    console.log(movies[movieId].Comments);
+
+    fs.writeFile(
+      "./public/json/movie-data.json",
+      JSON.stringify(movies, null, 2),
+      finished
+    );
     res.redirect("/Profile");
+
+    function finished(err) {
+      console.log("all set");
+    }
   }
 });
 
 app.route("/rating").post(urlencodedParser, (req, res) => {
   console.log("got to the rating stuff");
-  console.log(req.body)
+  console.log(req.body);
   let rating = req.body.rating;
   let movieId = req.body.id;
   let title = req.body.title;
@@ -477,9 +494,9 @@ app.route("/rating").post(urlencodedParser, (req, res) => {
     rating: rating,
     id: movieId,
     title: title,
-  }
+  };
   userOnline.ratings.push(ratingObj);
-  movieRatings.push(ratingObj)
+  movieRatings.push(ratingObj);
 
   for (let i = 0; i < users.length; i++) {
     if (users.username === userOnline.username) {
@@ -487,9 +504,20 @@ app.route("/rating").post(urlencodedParser, (req, res) => {
     }
   }
 
+  // Lets add the rating to the movie ratings
+  movies[movieId].Ratings.push(req.body.rating); // We added a comment to this movie
+  console.log(movies[movieId].Ratings);
+
+  fs.writeFile(
+    "./public/json/movie-data.json",
+    JSON.stringify(movies, null, 2),
+    finished
+  );
   res.redirect("/Profile");
 
-  // Finish this stuff off
+  function finished(err) {
+    console.log("all set");
+  }
 });
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
