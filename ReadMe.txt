@@ -5,3 +5,6 @@ How to install all node modules:
 How to run:
 
 => nodemon
+
+
+What is up homies
