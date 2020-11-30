@@ -153,26 +153,41 @@ app
   })
   .post(urlencodedParser, (req, res) => {
     // will get a username, email, password
-    try {
-      users.push({
-        id: Date.now().toString(),
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        contributing_user: false,
-        following: [],
-        followers: [],
-        peopleFollowing: [],
-        comments: [],
-        ratings: [],
-      });
-      // If everything goes well. new user gets added to the array. we redirect
-      // the user to the login page
-      res.redirect("/Login");
-    } catch {
-      // If there is an error, we redirect the user back to the same page.
-      res.redirect("/Register");
+    let userExists = false;
+    for (let i = 0; i < users.length; i++) { 
+      if (users[i].email.toUpperCase() === req.body.email.toUpperCase() ||
+        users[i].username.toUpperCase() === req.body.username.toUpperCase()) { 
+        userExists = true;
+        }
     }
+
+    if (!userExists) {
+      try {
+        users.push({
+          id: Date.now().toString(),
+          username: req.body.username,
+          email: req.body.email,
+          password: req.body.password,
+          contributing_user: false,
+          following: [],
+          followers: [],
+          peopleFollowing: [],
+          comments: [],
+          ratings: [],
+        });
+        // If everything goes well. new user gets added to the array. we redirect
+        // the user to the login page
+        res.redirect("/Login");
+      } catch {
+        // If there is an error, we redirect the user back to the same page.
+        res.redirect("/Register");
+      }
+    } else { 
+      res.redirect('/Register')
+    }
+
+    
+
   });
 
 // RESET PASSWORD ROUTE
@@ -184,20 +199,13 @@ app.route("/Reset-Password").get((req, res) => {
 app
   .route("/movies")
   .get((req, res) => {
-    console.log(req.query);
-
-    // if (req.query.texter === "People") {
-    //   console.log("We are going to the people route");
-    //   res.redirect(`/People?name=${res.query.search}`);
-    // } else {
     res.render("movies", {
+      userOnline: userOnline,
       texter: req.query.texter,
       search: req.query.search,
     });
-    // }
   })
   .post(urlencodedParser, (req, res) => {
-    console.log(req.body);
 
     let title = req.body.Title;
     let actors = req.body.Actors.split(",");
@@ -250,14 +258,13 @@ app
     res.redirect("/Profile");
 
     function finished(err) {
-      console.log("all set");
     }
   });
 
 // UNIQUE MOVIE ROUTE
 app.route("/movies/:").get((req, res) => {
-  console.log("the unique movie id is", req.query);
   res.render("unique-movie", {
+    userOnline: userOnline,
     movie_id: req.query.movie_id,
   });
 });
@@ -266,7 +273,6 @@ app.route("/movies/:").get((req, res) => {
 app
   .route("/People")
   .get((req, res) => {
-    console.log("the unique person is", req.query);
 
     if (!people.includes(req.query.search)) {
       res.redirect("/Profile");
@@ -301,10 +307,6 @@ app
         users[i] = userOnline;
       }
     }
-
-    console.log(req.body);
-    console.log("userOnline people following", userOnline.peopleFollowing);
-
     res.redirect("/Profile");
   });
 
@@ -312,9 +314,7 @@ app
 app
   .route("/users")
   .get((req, res) => {
-    console.log(req.query.search);
     const usernameUpper = req.query.search.toUpperCase();
-    console.log(usernameUpper);
 
     if (usernameUpper === userOnline.username.toUpperCase()) {
       res.redirect("/Profile");
@@ -341,18 +341,6 @@ app
     }
   })
   .post(urlencodedParser, (req, res) => {
-    // userSearched.followers.push(userOnline.username);
-    // userOnline.following.push(userSearched.username);
-
-    // for (let i = 0; i < users.length; i++) {
-    //   if (users[i].username == userSearched.username) {
-    //     users[i] = userSearched;
-    //   }
-    //   if (users[i].username == userOnline.username) {
-    //     users[i] = userOnline;
-    //   }
-    // }
-
     if (req.body.follow === "follow") {
       userSearched.followers.push(userOnline.username);
       userOnline.following.push(userSearched.username);
@@ -372,19 +360,8 @@ app
         users[i] = userOnline;
       }
     }
-
-    console.log(req.body);
-    console.log("userOnline following", userOnline.following);
-
     res.redirect("/Profile");
   });
-
-// UNIQUE MOVIE ROUTE
-// .app.route("/users/:")
-// .get((req, res) => {
-//   console.log("the unique user id is", req.query);
-//   res.send("<h1>This hasn't been done yet</h1>");
-// });
 
 // PROFILE ROUTE
 app
@@ -403,7 +380,6 @@ app
     }
   })
   .post(urlencodedParser, (req, res) => {
-    // console.log(req.body.contributing_user);
     if (req.body.contributing_user === "contributing_user") {
       userOnline.contributing_user = true;
     } else {
@@ -433,8 +409,6 @@ app
     res.render("person-add", userOnline);
   })
   .post(urlencodedParser, (req, res) => {
-    console.log(req.body);
-
     if (!people.includes(req.body.name)) {
       people.push(req.body.name);
     }
@@ -468,7 +442,6 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
     // Lets add the comment to the movie comments
 
     movies[movieId].Comments.push(req.body.comment); // We added a comment to this movie
-    console.log(movies[movieId].Comments);
 
     fs.writeFile(
       "./public/json/movie-data.json",
@@ -478,14 +451,11 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
     res.redirect("/Profile");
 
     function finished(err) {
-      console.log("all set");
     }
   }
 });
 
 app.route("/rating").post(urlencodedParser, (req, res) => {
-  console.log("got to the rating stuff");
-  console.log(req.body);
   let rating = req.body.rating;
   let movieId = req.body.id;
   let title = req.body.title;
@@ -506,7 +476,6 @@ app.route("/rating").post(urlencodedParser, (req, res) => {
 
   // Lets add the rating to the movie ratings
   movies[movieId].Ratings.push(req.body.rating); // We added a comment to this movie
-  console.log(movies[movieId].Ratings);
 
   fs.writeFile(
     "./public/json/movie-data.json",
@@ -516,7 +485,6 @@ app.route("/rating").post(urlencodedParser, (req, res) => {
   res.redirect("/Profile");
 
   function finished(err) {
-    console.log("all set");
   }
 });
 app.listen(PORT, () => {

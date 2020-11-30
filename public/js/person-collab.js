@@ -3,29 +3,48 @@
 // lets find people who frequently worked with nameValue
 const findMostWorkedWith = (dataObject, nameValue) => {
   let output = "";
-  // So the game plan is to load an array of objects.
-  // we add whoever worked with the guy. If there are less
-  // than 5 unique people, we just print out all of their names
-  // If there is more than that, we print out the five people
-  // that have the most movies with the guy. Simple. We list
-  // a max of 5 people only
 
-  let workedWith = []; // This is gonna have an array of objects
-  // Using the model ({name: ...., howManyTimesWorkedWith: ....})
+  let workedWith = [];
   for (let i = 0; i < dataObject.length; i++) {
     let director = dataObject[i].Director;
     let actors = dataObject[i].Actors.split(",");
 
-    if (director.includes(nameValue)) { 
-      console.log('bad')
+    if (director.includes(nameValue) || actors.includes(nameValue)) {
+      if (!director.includes(nameValue)) {
+        if (!workedWith.includes(nameValue)) {
+          workedWith.push(director);
+        }
+      } else {
+        if (!actors.includes(nameValue)) {
+          for (let z = 0; z < actors.length; z++) {
+            if (!actors[z].includes(nameValue)) {
+              if (!workedWith.includes(actors[z])) {
+                workedWith.push(actors[z]);
+              }
+            }
+          }
+        }
+      }
     }
+  }
 
+  // console.log(workedWith);
+  output += "<ul>";
+  if (workedWith.length <= 5) {
+    for (let i = 0; i < workedWith.length; i++) {
+      output += "<li>" + workedWith[i] + "</li>";
+    }
+  } else {
+    for (let i = 0; i < 5; i++) {
+      output += "<li>" + workedWith[i] + "</li>";
+    }
+  }
 
-  console.log(workedWith);
-
+  output += "</ul>";
   return output;
-};
 
+  // This is a pretty mediocre function. needs a fix by deadline
+};
 // We do some fetch request.
 fetch(`../json/movie-data.json`)
   .then((response) => {

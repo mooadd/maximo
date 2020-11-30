@@ -1,126 +1,15 @@
-<!-- <div class="container">
-  <div class="row text-center">
-    <div class="col-md-4">
-      <div class="card" style="width: 25rem">
-        <h1 class="text-center"><%=username%></h1>
-        <img src="./images/default-user.png" class="card-img-top" alt="..." />
-        <div class="card-body">
-          <p class="card-text"></p>
-
-          <form action="/Profile" method="POST">
-            <input
-              style="display: none"
-              type="text"
-              name="normal_user"
-              value="normal_user"
-            />
-            <button type="submit" class="btn btn-primary btn-lg btn-block">
-              DownGrade to a Normal User
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <form action="/movies" method="POST">
-        <h1 class="text-muted">Add a movie now</h1>
-        <div>
-          <label for="Title">Title</label>
-          <input type="text" name="title" id="title" placeholder="Movie title"
-          /required>
-        </div>
-        <div>
-          <label for="Year">Year</label>
-          <input type="text" name="Year" id="Year" placeholder="Release year"
-          /required>
-        </div>
-        <div>
-          <label for="Director">Director name</label>
-          <input type="text" name="Director" id="Director"
-          placeholder="Director" /required>
-        </div>
-        <div>
-          <label for="Runtime">Runtime</label>
-          <input type="text" name="Runtime" id="Runtime" placeholder="119min"
-          /required>
-        </div>
-        <div>
-          <label for="Actors">Actors</label>
-          <input type="text" name="Actors" id="Actors" placeholder="Jeff homes,
-          Steve Jobs" /required>
-        </div>
-        <div>
-          <label for="Genres">Genres</label>
-          <input type="text" name="Genres" id="Genres" placeholder="Family,
-          Animation" /required>
-        </div>
-        <div>
-          <label for="Rated">Rating</label>
-          <input type="text" name="Rating" id="Rating" placeholder="TV-14"
-          /required>
-        </div>
-        <div>
-          <label for="Language">Language</label>
-          <input type="text" name="Language" id="Language" placeholder="English"
-          /required>
-        </div>
-
-        <div class="file-field">
-          <div class="mb-4">
-            <img
-              src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
-              class="rounded-circle z-depth-1-half avatar-pic"
-              alt="example placeholder avatar"
-            />
-          </div>
-          <div class="d-flex justify-content-center">
-            <div class="btn btn-mdb-color btn-rounded float-left">
-              <span>Add photo</span>
-              <input type="file" />
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="col-md-2">This will have more stuff</div>
-  </div>
-</div> -->
-
-<!-- <div class="card" style="width: 25rem">
-  <h1 class="text-center"><%=username%></h1>
-  <img src="./images/default-user.png" class="card-img-top" alt="..." />
-  <div class="card-body">
-    <p class="card-text"></p>
-
-    <form action="/Profile" method="POST">
-      <input
-        style="display: none"
-        type="text"
-        name="contributing_user"
-        value="contributing_user"
-      />
-      <button type="submit" class="btn btn-primary btn-lg btn-block">
-        Become a Contributing User
-      </button>
-    </form>
-  </div>
-</div> -->
-
-<!-- <ul class="nav justify-content-between">
-  <li class="nav-item">
-    <h1>User: <%=username%></h1>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link" href="#">Logout</a>
-  </li>
-</ul> -->
 
 <div class="container">
   <!-- This is the nav -->
+<<<<<<< HEAD
   <ul class="navbar transparent navbar-inverse">
     <li class="navbar transparent navbar-inverse">
       <h1 style="color: white;">User: <%=username%></h1>
+=======
+  <ul class="nav justify-content-between bg-light align-items-center">
+    <li class="nav-item">
+      <a href="/Profile">User: <%=username%></a>
+>>>>>>> ada07fff2917e629246933c405baf4099fdd3e4e
     </li>
 
     <div class="d-flex flex-row align-items-center">
@@ -284,5 +173,15 @@
     </div>
 
   </div>
+
+  <div class="text-center my-4 movies-for-ya">
+    <h3 class="lead">Movies for you</h3>
+    <div id="movies" class="row">
+
+    </div>
   </div>
+
 </div>
+
+
+<script src="js/movies-recommended.js"></script>

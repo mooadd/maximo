@@ -1,39 +1,15 @@
-<!-- <div class="card" style="width: 25rem">
-  <h1 class="text-center"><%=username%></h1>
-  <img src="./images/default-user.png" class="card-img-top" alt="..." />
-  <div class="card-body">
-    <p class="card-text"></p>
-
-    <form action="/Profile" method="POST">
-      <input
-        style="display: none"
-        type="text"
-        name="contributing_user"
-        value="contributing_user"
-      />
-      <button type="submit" class="btn btn-primary btn-lg btn-block">
-        Become a Contributing User
-      </button>
-    </form>
-  </div>
-</div> -->
-
-<!-- <ul class="nav justify-content-between">
-  <li class="nav-item">
-    <h1>User: <%=username%></h1>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link" href="#">Logout</a>
-  </li>
-</ul> -->
-
 
 <div class="container">
   <!-- This is the nav -->
+<<<<<<< HEAD
   <ul class="navbar transparent navbar-inverse">
     <li class="navbar transparent navbar-inverse">
       <h1 style="color: white;">User: <%=username%></h1>
+=======
+  <ul class="nav justify-content-between bg-light align-items-center">
+    <li class="nav-item">
+      <a href="/Profile">User: <%=username%></a>
+>>>>>>> ada07fff2917e629246933c405baf4099fdd3e4e
     </li>
 
     <div class="d-flex flex-row align-items-center">
@@ -132,7 +108,9 @@
               type="text"
               name="search"
               id="search"
-              value=<%=following[i]%>
+              value="<%"
+              ="following[i]%"
+            />
             />
 
             <a
@@ -160,7 +138,9 @@
               type="text"
               name="search"
               id="search"
-              value=<%=followers[i]%>
+              value="<%"
+              ="followers[i]%"
+            />
             />
 
             <a
@@ -184,13 +164,12 @@
         <ul class="list-group">
           <% for (var i=0; i < peopleFollowing.length; i++) { %>
           <form action="/People" id="my_form3">
-
             <input
               style="display: none"
               type="text"
               name="texter"
               id="texter"
-              value= 'People'
+              value="People"
             />
 
             <input
@@ -198,7 +177,10 @@
               type="text"
               name="search"
               id="search"
-              value=<%= peopleFollowing[i] %>
+              value="<%"
+              ="peopleFollowing[i]"
+              %
+            />
             />
 
             <a
@@ -215,5 +197,9 @@
         </ul>
       </div>
     </div>
+  </div>
+
+  <div id="movies" class="row">
+      <!-- Output will be populated over here depending on differen't stuff -->
   </div>
 </div>
