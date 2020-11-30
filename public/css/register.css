@@ -5,7 +5,6 @@
 
 
 
-
 .View-User {
   display:block;
   width:100%;
@@ -64,7 +63,7 @@ p.text-muted {
 
 .underline{
   text-decoration: underline;
-  -webkit-text-decoration-color: #4ABBFF; /* Safari */  
+  -webkit-text-decoration-color: #4ABBFF; /* Safari */
   text-decoration-color: #4ABBFF;
 }
 
@@ -80,45 +79,28 @@ p.text-muted {
   margin-left: 10px;
 }
 
+.movee{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -155px;
+  margin-left: -255px;
+}
+
 .shrink{
   width: 450px;
 }
 
-
-body {
-  /* background-color: #121212; */
-  cursor: none !important;
-  /* overflow: hidden; */
+.navbar.transparent.navbar-inverse .navbar-inner {
+  border-width: 0px;
+  -webkit-box-shadow: 0px 0px;
+  box-shadow: 0px 0px;
+  background-color: rgba(0,0,0,0.0);
+  background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(0,0,0,0.00)),color-stop( 100% , rgba(0,0,0,0.00)));
+  background-image: -webkit-linear-gradient(270deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
+  background-image: linear-gradient(180deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
 }
 
-/* React Component CSS */
-
-.cursor {
-  width: 4px;
-  height: 4px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  position: absolute;
-  z-index: 11;
-  transition-duration: 1.2s;
-  transition-timing-function:  cubic-bezier(0.07, 1.18, 1, 1);
-}
-.cursor-follower {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  border: 2px solid #ffffff;
-  border-radius: 100px;
-  transition-duration: 0.1s;
-  transition-timing-function:  cubic-bezier(0.07, 1.18, 1, 1);
-}
-
-canvas, html {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #121212;
-}
 
 /*
 body{

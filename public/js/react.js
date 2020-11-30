@@ -1,31 +1,4 @@
-//
-// //Start code for React
-// 'use strict';
-//
-// const e = React.createElement;
-//
-// class reactButton extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { liked: false };
-//   }
-//
-//   render() {
-//     if (this.state.liked) {
-//       return 'You liked this.';
-//     }
-//
-//     return e(
-//       'button',
-//       { onClick: () => this.setState({ liked: true }) },
-//       'Follow'
-//     );
-//   }
-// }
-//
-// // these two lines of code find the <div> we added to our HTML
-// const domContainer = document.querySelector('#react_container');
-// ReactDOM.render(e(reactButton), domContainer);
+
 
 // Cursor Component
 const Cursor =  () => {
