@@ -42,7 +42,7 @@ let users = [
     ratings: [],
   },
 ];
-let userOnline = null;
+let userOnline = null; // Giving it a default value of null.
 let userSearched = null;
 let personSearched = null;
 
@@ -124,7 +124,6 @@ app
           users[i].password === req.body.password
         ) {
           userOnline = users[i];
-          console.log(userOnline);
           bool = true;
           res.redirect("/Profile");
           break;
@@ -395,7 +394,6 @@ app
 // LOGOUT ROUTE
 app.route("/Logout").get((req, res) => {
   userOnline = null;
-  console.log(userOnline);
   res.redirect("/Login");
 });
 
@@ -416,42 +414,39 @@ app
   });
 
 app.route("/add-comment").post(urlencodedParser, (req, res) => {
-  console.log(req.body);
-  if (userOnline === null) {
-    res.redirect("/Login"); // Fix this
-  } else {
-    let comment = req.body.comment;
-    let movieId = req.body.id;
-    let movieTitle = req.body.title;
+  let comment = req.body.comment;
+  let movieId = req.body.id;
+  let movieTitle = req.body.title;
 
-    let commentObj = {
-      id: movieId,
-      comment: comment,
-      title: movieTitle,
-    };
-    movieComments.push(commentObj);
+  let commentObj = {
+    id: movieId,
+    comment: comment,
+    title: movieTitle,
+  };
+  movieComments.push(commentObj);
 
-    userOnline.comments.push(commentObj);
-    // now lets update that for the users
-    for (let i = 0; i < users.length; i++) {
-      if (users.username === userOnline.username) {
-        users[i] = userOnline;
-      }
+  userOnline.comments.push(commentObj);
+  // now lets update that for the users
+  for (let i = 0; i < users.length; i++) {
+    if (users.username === userOnline.username) {
+      users[i] = userOnline;
+      userOnline = users[i];
+      break;
     }
+  }
 
-    // Lets add the comment to the movie comments
+  // Lets add the comment to the movie comments
 
-    movies[movieId].Comments.push(req.body.comment); // We added a comment to this movie
+  movies[movieId].Comments.push(req.body.comment); // We added a comment to this movie
 
-    fs.writeFile(
-      "./public/json/movie-data.json",
-      JSON.stringify(movies, null, 2),
-      finished
-    );
-    res.redirect("/Profile");
+  fs.writeFile(
+    "./public/json/movie-data.json",
+    JSON.stringify(movies, null, 2),
+    finished
+  );
+  res.redirect("/Profile");
 
-    function finished(err) {
-    }
+  function finished(err) {
   }
 });
 

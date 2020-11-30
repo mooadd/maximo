@@ -102,9 +102,7 @@
               type="text"
               name="search"
               id="search"
-              value="<%"
-              ="following[i]%"
-            />
+              value=<%=following[i]%>
             />
 
             <a
@@ -132,9 +130,7 @@
               type="text"
               name="search"
               id="search"
-              value="<%"
-              ="followers[i]%"
-            />
+              value=<%=followers[i]%>
             />
 
             <a
@@ -171,10 +167,7 @@
               type="text"
               name="search"
               id="search"
-              value="<%"
-              ="peopleFollowing[i]"
-              %
-            />
+              value=<%=peopleFollowing[i]%>
             />
 
             <a
@@ -193,7 +186,14 @@
     </div>
   </div>
 
-  <div id="movies" class="row">
-      <!-- Output will be populated over here depending on differen't stuff -->
+  <div class="text-center my-4 movies-for-ya">
+    <h3 class="lead">Movies for you</h3>
+    <div id="movies" class="row">
+
+    </div>
   </div>
 </div>
+
+
+
+<script src="js/movies-recommended.js"></script

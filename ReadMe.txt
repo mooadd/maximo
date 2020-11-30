@@ -4,7 +4,5 @@ How to install all node modules:
 
 How to run:
 
-=> nodemon
+=> npm start
 
-
-What is up homies
