@@ -1,8 +1,8 @@
 <div class="container">
   <!-- This is the nav -->
-  <ul class="nav justify-content-between bg-light align-items-center">
-    <li class="nav-item">
-      <a href="/Profile">User: <%=username%></a>
+  <ul id="navbar" class="navbar transparent navbar-inverse">
+    <li class="navbar transparent navbar-inverse">
+      <h1 style="color: white;">User: <%=username%></h1>
     </li>
 
     <div class="d-flex flex-row align-items-center">
@@ -26,7 +26,7 @@
   <!-- We add stuff here -->
   <div class="text-center my-4">
     <div class="text-center">
-      <h1><%= foundUser.username %></h1>
+      <h1 style="color: teal;"><%= foundUser.username %></h1>
 
       <form action="/users" method="POST">
         <button type="submit" class="btn btn-outline-success">

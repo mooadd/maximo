@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/register.css">
     <link rel="stylesheet" href="/css/media.css">
     <link rel="stylesheet" href="/css/movies.css">
+    <link rel="stylesheet" href="/css/cursor.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Maximo</title>
@@ -14,19 +15,22 @@
 
   </head>
   <body>
-    <!-- <canvas id="space"></canvas> -->
+    <canvas id="space"></canvas>
     <div id="root"></div>
 
     <div class="content container-lg no-padding-sides">
 
-      <header class="middle tweek">
-        <nav class="nav d-flex flex-row  justify-content-between">
-          <div>
-            <button class="custom-btn btn-3 logo-button" id="maximo-button" ><span>Maximo</span></button>
-          </div>
-          <div>
-            <a href="/Register" class="btn btn-success">Sign up</a>
-          </div>
+      <header class="main-header">
+        <nav class="middle tweek navbar navbar-expand-lg navbar-light">
+          <!--<a class="navbar-brand" href="#">Maximo</a>-->
+          <button class="custom-btn btn-3 logo-button" id="maximo-button" ><span>Maximo</span></button>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <form action="/Register">
+            <button style= "color: #4CAF50;"type="submit" class="btn btn-primary search-button left">Sign Up</button>
+          
+          </form>
         </nav>
       </header>
 

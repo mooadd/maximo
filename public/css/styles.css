@@ -26,7 +26,7 @@ body {
 }
 
 body {
-  background: #e0e5ec;
+  background: black;
 }
 
 .frame {
@@ -283,6 +283,15 @@ body {
 /* #navbarSupportedContent {
 } */
 
+.nav{
+  background: #121212;
+}
+
+#navbar {
+  z-index: 9999;
+
+}
+
 .search-button {
   height: 2.5rem;
   border-radius: 0;
@@ -302,4 +311,23 @@ body {
   background-color: #82b1ff;
 }
 
+
+.back-colour{
+
+  border: none;
+  background: #4CAF50;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+  
+}
+
+.left{
+  margin-left: 885px;
+}
 /* Movie ratings */
