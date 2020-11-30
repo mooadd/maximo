@@ -379,13 +379,6 @@ app
     res.redirect("/Profile");
   });
 
-// UNIQUE MOVIE ROUTE
-// .app.route("/users/:")
-// .get((req, res) => {
-//   console.log("the unique user id is", req.query);
-//   res.send("<h1>This hasn't been done yet</h1>");
-// });
-
 // PROFILE ROUTE
 app
   .route("/Profile")

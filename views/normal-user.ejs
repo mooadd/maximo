@@ -28,7 +28,6 @@
   </li>
 </ul> -->
 
-
 <div class="container">
   <!-- This is the nav -->
   <ul class="nav justify-content-between bg-light align-items-center">
@@ -132,7 +131,9 @@
               type="text"
               name="search"
               id="search"
-              value=<%=following[i]%>
+              value="<%"
+              ="following[i]%"
+            />
             />
 
             <a
@@ -160,7 +161,9 @@
               type="text"
               name="search"
               id="search"
-              value=<%=followers[i]%>
+              value="<%"
+              ="followers[i]%"
+            />
             />
 
             <a
@@ -184,13 +187,12 @@
         <ul class="list-group">
           <% for (var i=0; i < peopleFollowing.length; i++) { %>
           <form action="/People" id="my_form3">
-
             <input
               style="display: none"
               type="text"
               name="texter"
               id="texter"
-              value= 'People'
+              value="People"
             />
 
             <input
@@ -198,7 +200,10 @@
               type="text"
               name="search"
               id="search"
-              value=<%= peopleFollowing[i] %>
+              value="<%"
+              ="peopleFollowing[i]"
+              %
+            />
             />
 
             <a
