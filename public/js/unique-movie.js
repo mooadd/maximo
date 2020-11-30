@@ -189,7 +189,7 @@ fetch(`../json/movie-data.json`)
                     <p class="">Movie language: ${desiredObject.Language}<p>
                   </div>
                   <hr>
-                  <h3 class="text-muted">Similar movies</h3>
+                  <h3 style="color: white;" class="text">Similar movies</h3>
                   <div class='similar-movies'>
                       <div class="card card-body">
                         <div class="row justify-content-center">
@@ -200,7 +200,7 @@ fetch(`../json/movie-data.json`)
 
                   <div>
                     <form class="my-4" action="/add-comment" method="POST">
-                      <h4>Comments</h4>
+                      <h4 style="color: white;">Comments</h4>
                       <hr>
 
                       <div class="form-group">
