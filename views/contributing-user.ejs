@@ -3,7 +3,7 @@
   <!-- This is the nav -->
   <ul class="navbar transparent navbar-inverse">
     <li class="navbar transparent navbar-inverse">
-      <h1 style="color: white;">User: <%=username%></h1>
+      <a style="color: white;" href="/Profile">User: <%=username%></a>
     </li>
 
     <div class="d-flex flex-row align-items-center">
@@ -154,22 +154,16 @@
 
         <ul class="list-group">
           <% for (var i=0; i < peopleFollowing.length; i++) { %>
-          <form action="/People" id="my_form3">
-            <input
-              style="display: none"
-              type="text"
-              name="texter"
-              id="texter"
-              value="People"
-            />
+          <form action="/People"  id="my_form3">
 
             <input
               style="display: none"
               type="text"
               name="search"
               id="search"
-              value=<%=peopleFollowing[i]%>
+              value='<%=peopleFollowing[i]%>'
             />
+
 
             <a
               id="search-link"
@@ -178,7 +172,7 @@
               onclick="document.getElementById('my_form3').submit(); return false;"
             >
               <%= peopleFollowing[i] %>
-            </a>
+            </a> 
           </form>
 
           <% } %>

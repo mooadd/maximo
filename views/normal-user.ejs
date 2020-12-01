@@ -3,7 +3,7 @@
   <!-- This is the nav -->
   <ul class="navbar transparent navbar-inverse">
     <li class="navbar transparent navbar-inverse">
-      <h1 style="color: white;">User: <%=username%></h1>
+      <a style="color: white;" href="/Profile">User: <%=username%></a>
     </li>
 
     <div class="d-flex flex-row align-items-center">
@@ -167,7 +167,7 @@
               type="text"
               name="search"
               id="search"
-              value=<%=peopleFollowing[i]%>
+              value='<%=peopleFollowing[i]%>'
             />
 
             <a
