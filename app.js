@@ -333,9 +333,11 @@ app
       if (usernameUpper === userOnline.username.toUpperCase()) {
         res.redirect("/Profile");
       } else {
+        let bool = false;
         for (let i = 0; i < users.length; i++) {
           if (users[i].username.toUpperCase() === usernameUpper) {
             userSearched = users[i];
+            bool = true;
 
             if (userOnline.following.includes(users[i].username)) {
               res.render("user-view", {
@@ -351,6 +353,9 @@ app
               });
             }
           }
+        }
+        if (bool === false) { 
+          res.redirect('/Profile')
         }
       }
     } else {
