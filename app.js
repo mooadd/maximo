@@ -19,58 +19,124 @@ const { dir } = require("console");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 // Connecing Database
 var mongoose = require("mongoose");
 const { stringify } = require("querystring");
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/maximo", {useNewUrlParser: true}, (err) => {
-  if (!err) { console.log('MongoDB Connection Succeeded.') }
-  else { console.log('Error in DB connection : ' + err) }
-});
+mongoose.connect(
+  "mongodb://localhost:27017/maximo",
+  { useNewUrlParser: true },
+  (err) => {
+    if (!err) {
+      console.log("MongoDB Connection Succeeded.");
+    } else {
+      console.log("Error in DB connection : " + err);
+    }
+  }
+);
 
 // Defining our schema
 var userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: 'This field is required.'
-  },
-  email: {
-    type: String,
-  },
-  password: {
-    type: String,
-    required: 'This field is required.'
-  },
+  username: String,
+  email: String,
+  password: String,
+  contributing_user: Boolean,
+  following: [
+    {
+      type: String,
+    },
+  ],
+  followers: [
+    {
+      type: String,
+    },
+  ],
+  peopleFollowing: [
+    {
+      type: String,
+    },
+  ],
+  comments: [
+    {
+      comment: String,
+      id: String,
+      title: String,
+    },
+  ],
+  ratings: [
+    {
+      rating: String,
+      id: String,
+      title: String
+    },
+  ],
+  notifications: [
+    {
+      type: String,
+    },
+  ],
 });
-
-// Custom validation for email
-userSchema.path('email').validate((val) => {
-  emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return emailRegex.test(val);
-}, 'Invalid e-mail.');
-
+//       password: req.body.password,
+//       contributing_user: false,
+//       following: [],
+//       followers: [],
+//       peopleFollowing: [],
+//       comments: [],
+//       ratings: [],
 // Creating Model
-var User = mongoose.model('User', userSchema);
-
+var User = mongoose.model("User", userSchema, "user");
 
 function insertUser(req, res) {
-  var user = new User();
-  user.username = req.body.username;
-  user.email = req.body.email;
-  user.password = req.body.password;
-  user.save((err,doc) => {
-    if (!err) {
-      console.log('success!')
-      res.redirect("/Login");
+  User.find({}, (err, data) => {
+    let userExists = false;
+    for (let i = 0; i < data.length; i++) {
+      if (
+        data[i].email.toUpperCase() === req.body.email.toUpperCase() ||
+        data[i].username.toUpperCase() === req.body.username.toUpperCase()
+      ) {
+        userExists = true;
+      }
     }
-    else {res.redirect("/Register");}
-  })
+
+    if (!userExists) {
+      try {
+        // users.push({
+        //   id: Date.now().toString(),
+        //   username: req.body.username,
+        //   email: req.body.email,
+        //   password: req.body.password,
+        //   contributing_user: false,
+        //   following: [],
+        //   followers: [],
+        //   peopleFollowing: [],
+        //   comments: [],
+        //   ratings: [],
+        // });
+
+        var user = new User();
+        user.username = req.body.username;
+        user.email = req.body.email;
+        user.password = req.body.password;
+        user.contributing_user = false;
+        user.followers = [];
+        user.followers = [];
+        user.peopleFollowing = [];
+        user.comments = [];
+        user.ratings = [];
+        user.notifications = [];
+        user.save();
+        // If everything goes well. new user gets added to the array. we redirect
+        // the user to the login page
+        res.redirect("/Login");
+      } catch {
+        // If there is an error, we redirect the user back to the same page.
+        res.redirect("/Register");
+      }
+    } else {
+      res.redirect("/Register");
+    }
+  });
 }
-
-
-
-
 
 // An array to store user information
 let users = [
@@ -183,34 +249,59 @@ app
   })
   .post(urlencodedParser, (req, res) => {
     // now, lets check if a username and password is in an the array of users.
-    let bool = false;
-    try {
-      for (let i = 0; i < users.length; i++) {
-        if (
-          users[i].username === req.body.username &&
-          users[i].password === req.body.password
-        ) {
-          userOnline = users[i];
-          bool = true;
-          res.redirect("/Profile");
-          break;
+    User.find({}, (err, users) => {
+      let bool = false;
+      try {
+        console.log(users);
+        for (let i = 0; i < users.length; i++) {
+          if (
+            users[i].password.toUpperCase() ===
+              req.body.password.toUpperCase() &&
+            users[i].username.toUpperCase() === req.body.username.toUpperCase()
+          ) {
+            userOnline = users[i];
+            bool = true;
+            console.log("going to the profile route");
+            res.redirect("/Profile");
+            break;
+          }
         }
-      }
-
-      // if the password or username was wrong, we bring them back here
-      if (bool === false) {
+        // if the password or username was wrong, we bring them back here
+        if (bool === false) {
+          res.redirect("/Login");
+        }
+      } catch {
         res.redirect("/Login");
       }
-    } catch {
-      res.redirect("/Login");
-    }
-  });
+    });
+    // let bool = false;
 
+    // try {
+    //   for (let i = 0; i < users.length; i++) {
+    //     if (
+    //       users[i].username === req.body.username &&
+    //       users[i].password === req.body.password
+    //     ) {
+    //       userOnline = users[i];
+    //       bool = true;
+    //       res.redirect("/Profile");
+    //       break;
+    //     }
+    //   }
+
+    //   // if the password or username was wrong, we bring them back here
+    //   if (bool === false) {
+    //     res.redirect("/Login");
+    //   }
+    // } catch {
+    //   res.redirect("/Login");
+    // }
+  });
 // REGISTER ROUTE
 app
   .route("/Register")
   .get((req, res) => {
-    res.render("sub-files/sign-up.ejs", User);
+    res.render("sign-up");
     // if (userOnline != null) {
     //   console.log("got here");
     //   res.redirect("/Profile");
@@ -220,14 +311,12 @@ app
   })
   .post(urlencodedParser, (req, res) => {
     console.log(req.body);
-    if (req.body._id == '')
     insertUser(req, res);
-    // will get a username, email, password
-    let userExists = false;
-<<<<<<< HEAD
-    // for (let i = 0; i < users.length; i++) { 
+
+    // let userExists = false;
+    // for (let i = 0; i < users.length; i++) {
     //   if (users[i].email.toUpperCase() === req.body.email.toUpperCase() ||
-    //     users[i].username.toUpperCase() === req.body.username.toUpperCase()) { 
+    //     users[i].username.toUpperCase() === req.body.username.toUpperCase()) {
     //     userExists = true;
     //     }
     // }
@@ -253,48 +342,9 @@ app
     //     // If there is an error, we redirect the user back to the same page.
     //     res.redirect("/Register");
     //   }
-    // } else { 
+    // } else {
     //   res.redirect('/Register')
     // }
-
-    
-
-=======
-    for (let i = 0; i < users.length; i++) {
-      if (
-        users[i].email.toUpperCase() === req.body.email.toUpperCase() ||
-        users[i].username.toUpperCase() === req.body.username.toUpperCase()
-      ) {
-        userExists = true;
-      }
-    }
-
-    if (!userExists) {
-      try {
-        users.push({
-          id: Date.now().toString(),
-          username: req.body.username,
-          email: req.body.email,
-          password: req.body.password,
-          contributing_user: false,
-          following: [],
-          followers: [],
-          peopleFollowing: [],
-          comments: [],
-          ratings: [],
-          notifications: [],
-        });
-        // If everything goes well. new user gets added to the array. we redirect
-        // the user to the login page
-        res.redirect("/Login");
-      } catch {
-        // If there is an error, we redirect the user back to the same page.
-        res.redirect("/Register");
-      }
-    } else {
-      res.redirect("/Register");
-    }
->>>>>>> aed7557e51c7f1c2f90999f238acecaefae23d49
   });
 
 // RESET PASSWORD ROUTE
@@ -436,30 +486,55 @@ app
       if (usernameUpper === userOnline.username.toUpperCase()) {
         res.redirect("/Profile");
       } else {
-        let bool = false;
-        for (let i = 0; i < users.length; i++) {
-          if (users[i].username.toUpperCase() === usernameUpper) {
-            userSearched = users[i];
-            bool = true;
-
-            if (userOnline.following.includes(users[i].username)) {
-              res.render("user-view", {
-                follow: "unfollow",
-                username: userOnline.username,
-                foundUser: users[i],
-              });
-            } else {
-              res.render("user-view", {
-                follow: "follow",
-                username: userOnline.username,
-                foundUser: users[i],
-              });
+        User.find({}, (err, users) => {
+          let bool = false;
+          for (let i = 0; i < users.length; i++) {
+            if (users[i].username.toUpperCase() === usernameUpper) {
+              userSearched = users[i];
+              bool = true;
+              if (userOnline.following.includes(users[i].username)) {
+                res.render("user-view", {
+                  follow: "unfollow",
+                  username: userOnline.username,
+                  foundUser: users[i],
+                });
+              } else {
+                res.render("user-view", {
+                  follow: "follow",
+                  username: userOnline.username,
+                  foundUser: users[i],
+                });
+              }
             }
           }
-        }
-        if (bool === false) {
-          res.redirect("/Profile");
-        }
+          if (bool === false) {
+            res.redirect("/Profile");
+          }
+        });
+
+        // let bool = false;
+        // for (let i = 0; i < users.length; i++) {
+        //   if (users[i].username.toUpperCase() === usernameUpper) {
+        //     userSearched = users[i];
+        //     bool = true;
+        //     if (userOnline.following.includes(users[i].username)) {
+        //       res.render("user-view", {
+        //         follow: "unfollow",
+        //         username: userOnline.username,
+        //         foundUser: users[i],
+        //       });
+        //     } else {
+        //       res.render("user-view", {
+        //         follow: "follow",
+        //         username: userOnline.username,
+        //         foundUser: users[i],
+        //       });
+        //     }
+        //   }
+        // }
+        // if (bool === false) {
+        //   res.redirect("/Profile");
+        // }
       }
     } else {
       res.redirect("/Login");
@@ -477,14 +552,25 @@ app
       userOnline.following.splice(index, 1);
     }
 
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].username == userSearched.username) {
-        users[i] = userSearched;
-      }
-      if (users[i].username == userOnline.username) {
-        users[i] = userOnline;
-      }
-    }
+    userSearched.save();
+    userOnline.save();
+
+    // for (let i = 0; i < users.length; i++) {
+    //   if (users[i].username == userSearched.username) {
+    //     users[i] = userSearched;
+    //   }
+    //   if (users[i].username == userOnline.username) {
+    //     users[i] = userOnline;
+    //   }
+    // }
+    // User.findOneAndUpdate(
+    //   { id: userSearched._id },
+    //   { followers: userSearched.followers }
+    // );
+    // User.findOneAndUpdate(
+    //   { id: userSearched._id },
+    //   { following: userOnline.following }
+    // );
     res.redirect("/Profile");
   });
 
@@ -512,9 +598,13 @@ app
       userOnline.contributing_user = false;
     }
 
-    for (let i = 0; i < users.length; i++) {
-      if (userOnline.username === users[i].username) users[i] = userOnline;
-    }
+    userOnline.save();
+    // userSchema.findOneAndUpdate({ username: userOnline.username }, {
+    //   contributing_user: userOnline.contributing_user
+    // });
+    // // for (let i = 0; i < users.length; i++) {
+    // //   if (userOnline.username === users[i].username) users[i] = userOnline;
+    // // }
     res.redirect("/Profile");
   });
 
@@ -575,14 +665,15 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
   movieComments.push(commentObj);
 
   userOnline.comments.push(commentObj);
+  userOnline.save();
   // now lets update that for the users
-  for (let i = 0; i < users.length; i++) {
-    if (users.username === userOnline.username) {
-      users[i] = userOnline;
+  // for (let i = 0; i < users.length; i++) {
+  //   if (users.username === userOnline.username) {
+  //     users[i] = userOnline;
 
-      break;
-    }
-  }
+  //     break;
+  //   }
+  // }
 
   // Lets add the comment to the movie comments
 
@@ -608,14 +699,16 @@ app.route("/rating").post(urlencodedParser, (req, res) => {
     id: movieId,
     title: title,
   };
+  
   userOnline.ratings.push(ratingObj);
+  userOnline.save();
   movieRatings.push(ratingObj);
 
-  for (let i = 0; i < users.length; i++) {
-    if (users.username === userOnline.username) {
-      users[i] = userOnline;
-    }
-  }
+  // for (let i = 0; i < users.length; i++) {
+  //   if (users.username === userOnline.username) {
+  //     users[i] = userOnline;
+  //   }
+  // }
 
   // Lets add the rating to the movie ratings
   movies[movieId].Ratings.push(req.body.rating); // We added a comment to this movie

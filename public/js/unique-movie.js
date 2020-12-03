@@ -271,11 +271,7 @@ fetch(`../json/movie-data.json`)
               <div class="well text-center">
                 <img src="${desiredObject.Poster}">
                 <h5 style="color:yellow;">${desiredObject.Title}</h5>
-<<<<<<< HEAD
                   <div style="color:yellow; class="card card-body">
-=======
-                  <div class="card card-body">
->>>>>>> aed7557e51c7f1c2f90999f238acecaefae23d49
                     <p>${desiredObject.Plot}<p>
                     <p>Maximo rating: ${Math.round(rating)}<p>
                     <p class="">Runtime: ${desiredObject.Runtime}<p>
