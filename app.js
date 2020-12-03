@@ -115,7 +115,7 @@ const data = fs.readFileSync("./public/json/movie-data.json");
 let movies = JSON.parse(data);
 for (let i = 0; i < movies.length; i++) {
   let actors = movies[i].Actors.split(",");
-  let director = movies[i].Director;
+  let directors = movies[i].Director.split(",");
   // let writers = movies[i].Writer.split(/[,]+/);
 
   for (let i = 0; i < actors.length; i++) {
@@ -124,9 +124,15 @@ for (let i = 0; i < movies.length; i++) {
     }
   }
 
-  if (!people.includes(director)) {
-    people.push(director);
+  for (let i = 0; i < directors.length; i++) {
+    if (!people.includes(directors[i])) {
+      people.push(directors[i]);
+    }
   }
+
+  // if (!people.includes(director)) {
+  //   people.push(director);
+  // }
 
   // I will get to this some other day. for now, actors and directors
   // for (let i = 0; i < writers.length; i++) {
@@ -216,6 +222,7 @@ app
     insertUser(req, res);
     // will get a username, email, password
     let userExists = false;
+<<<<<<< HEAD
     // for (let i = 0; i < users.length; i++) { 
     //   if (users[i].email.toUpperCase() === req.body.email.toUpperCase() ||
     //     users[i].username.toUpperCase() === req.body.username.toUpperCase()) { 
@@ -250,6 +257,41 @@ app
 
     
 
+=======
+    for (let i = 0; i < users.length; i++) {
+      if (
+        users[i].email.toUpperCase() === req.body.email.toUpperCase() ||
+        users[i].username.toUpperCase() === req.body.username.toUpperCase()
+      ) {
+        userExists = true;
+      }
+    }
+
+    if (!userExists) {
+      try {
+        users.push({
+          id: Date.now().toString(),
+          username: req.body.username,
+          email: req.body.email,
+          password: req.body.password,
+          contributing_user: false,
+          following: [],
+          followers: [],
+          peopleFollowing: [],
+          comments: [],
+          ratings: [],
+        });
+        // If everything goes well. new user gets added to the array. we redirect
+        // the user to the login page
+        res.redirect("/Login");
+      } catch {
+        // If there is an error, we redirect the user back to the same page.
+        res.redirect("/Register");
+      }
+    } else {
+      res.redirect("/Register");
+    }
+>>>>>>> aed7557e51c7f1c2f90999f238acecaefae23d49
   });
 
 // RESET PASSWORD ROUTE
@@ -261,14 +303,17 @@ app.route("/Reset-Password").get((req, res) => {
 app
   .route("/movies")
   .get((req, res) => {
-    res.render("movies", {
-      userOnline: userOnline,
-      texter: req.query.texter,
-      search: req.query.search,
-    });
+    if (userOnline != null) {
+      res.render("movies", {
+        userOnline: userOnline,
+        texter: req.query.texter,
+        search: req.query.search,
+      });
+    } else {
+      res.redirect("/Login");
+    }
   })
   .post(urlencodedParser, (req, res) => {
-
     let title = req.body.Title;
     let actors = req.body.Actors.split(",");
     let genres = req.body.Genres;
@@ -319,41 +364,47 @@ app
     );
     res.redirect("/Profile");
 
-    function finished(err) {
-    }
+    function finished(err) {}
   });
 
 // UNIQUE MOVIE ROUTE
 app.route("/movies/:").get((req, res) => {
-  res.render("unique-movie", {
-    userOnline: userOnline,
-    movie_id: req.query.movie_id,
-  });
+  if (userOnline != null) {
+    res.render("unique-movie", {
+      userOnline: userOnline,
+      movie_id: req.query.movie_id,
+    });
+  } else {
+    res.redirect("/Login");
+  }
 });
 
 // PEOPLE ROUTE
 app
   .route("/People")
   .get((req, res) => {
-
-    if (!people.includes(req.query.search)) {
-      res.redirect("/Profile");
-    } else {
-      let index = people.indexOf(req.query.search);
-      personSearched = req.query.search;
-      if (userOnline.peopleFollowing.includes(req.query.search)) {
-        res.render("person", {
-          follow: "unfollow",
-          username: userOnline.username,
-          name: req.query.search,
-        });
+    if (userOnline != null) {
+      if (!people.includes(req.query.search)) {
+        res.redirect("/Profile");
       } else {
-        res.render("person", {
-          follow: "follow",
-          username: userOnline.username,
-          name: req.query.search,
-        });
+        let index = people.indexOf(req.query.search);
+        personSearched = req.query.search;
+        if (userOnline.peopleFollowing.includes(req.query.search)) {
+          res.render("person", {
+            follow: "unfollow",
+            username: userOnline.username,
+            name: req.query.search,
+          });
+        } else {
+          res.render("person", {
+            follow: "follow",
+            username: userOnline.username,
+            name: req.query.search,
+          });
+        }
       }
+    } else {
+      res.redirect("/Login");
     }
   })
   .post(urlencodedParser, (req, res) => {
@@ -376,30 +427,39 @@ app
 app
   .route("/users")
   .get((req, res) => {
-    const usernameUpper = req.query.search.toUpperCase();
+    if (userOnline != null) {
+      const usernameUpper = req.query.search.toUpperCase();
 
-    if (usernameUpper === userOnline.username.toUpperCase()) {
-      res.redirect("/Profile");
-    } else {
-      for (let i = 0; i < users.length; i++) {
-        if (users[i].username.toUpperCase() === usernameUpper) {
-          userSearched = users[i];
+      if (usernameUpper === userOnline.username.toUpperCase()) {
+        res.redirect("/Profile");
+      } else {
+        let bool = false;
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].username.toUpperCase() === usernameUpper) {
+            userSearched = users[i];
+            bool = true;
 
-          if (userOnline.following.includes(users[i].username)) {
-            res.render("user-view", {
-              follow: "unfollow",
-              username: userOnline.username,
-              foundUser: users[i],
-            });
-          } else {
-            res.render("user-view", {
-              follow: "follow",
-              username: userOnline.username,
-              foundUser: users[i],
-            });
+            if (userOnline.following.includes(users[i].username)) {
+              res.render("user-view", {
+                follow: "unfollow",
+                username: userOnline.username,
+                foundUser: users[i],
+              });
+            } else {
+              res.render("user-view", {
+                follow: "follow",
+                username: userOnline.username,
+                foundUser: users[i],
+              });
+            }
           }
         }
+        if (bool === false) { 
+          res.redirect('/Profile')
+        }
       }
+    } else {
+      res.redirect("/Login");
     }
   })
   .post(urlencodedParser, (req, res) => {
@@ -456,18 +516,40 @@ app
 
 // LOGOUT ROUTE
 app.route("/Logout").get((req, res) => {
-  userOnline = null;
-  res.redirect("/Login");
+  if (userOnline != null) {
+    userOnline = null;
+    res.redirect("/Login");
+  } else {
+    res.redirect("/Login");
+  }
 });
 
 app.route("/add-movie").get((req, res) => {
-  res.render("movie-add", userOnline);
+  if (userOnline === null) {
+    res.redirect("/Login");
+  } else {
+    // that means the user is online
+    if (!userOnline.contributing_user) {
+      res.redirect("/Profile");
+    } else {
+      res.render("movie-add", userOnline);
+    }
+  }
 });
 
 app
   .route("/add-person")
   .get((req, res) => {
-    res.render("person-add", userOnline);
+    if (userOnline === null) {
+      res.redirect("/Login");
+    } else {
+      // that means the user is online
+      if (!userOnline.contributing_user) {
+        res.redirect("/Profile");
+      } else {
+        res.render("person-add", userOnline);
+      }
+    }
   })
   .post(urlencodedParser, (req, res) => {
     if (!people.includes(req.body.name)) {
@@ -509,8 +591,7 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
   );
   res.redirect("/Profile");
 
-  function finished(err) {
-  }
+  function finished(err) {}
 });
 
 app.route("/rating").post(urlencodedParser, (req, res) => {
@@ -542,8 +623,7 @@ app.route("/rating").post(urlencodedParser, (req, res) => {
   );
   res.redirect("/Profile");
 
-  function finished(err) {
-  }
+  function finished(err) {}
 });
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

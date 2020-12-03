@@ -91,13 +91,4 @@ fetch(`../json/movie-data.json`)
     console.log(err);
   });
 
-//   <form action="/movies/:">
-//     <input type="text" id="movie_id" name="movie_id" value="${recommendedMoviesObject[i].index}">
-//     <button class="btn btn-success" role="button" href="#">
-//     More Info
-//     </button>
-// </form>
 
-// <a href="javascript:DoPost()">
-//     <img src="${recommendedMoviesObject[i].movie.Poster}">
-// </a>

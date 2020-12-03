@@ -9,7 +9,7 @@ const nameOutput = (dataObject, nameValue) => {
     // Old if block "dataObject[i].Title.toUpperCase().indexOf(searchValue.toUpperCase()) != -1"
     // Second if block "dataObject[i].Title.toUpperCase().includes(searchValue.toUpperCase())"
     if (
-      dataObject[i].Director === nameValue ||
+      dataObject[i].Director.includes(nameValue) ||
       dataObject[i].Actors.includes(nameValue) ||
       dataObject[i].Writer.includes(nameValue)
     ) {

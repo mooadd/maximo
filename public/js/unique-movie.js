@@ -83,7 +83,7 @@ const titleOutput = (dataObject, searchValue) => {
             <div class="col-md-3">
               <div class="well text-center">
                 <img src="${dataObject[i].Poster}">
-                <h5 style="color:yellow;>${dataObject[i].Title}</h5>
+                <h5 style="color:yellow;">${dataObject[i].Title}</h5>
                 <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Movie Details
                 </a>
@@ -172,19 +172,117 @@ fetch(`../json/movie-data.json`)
       rating = ratingSum / desiredObject.Ratings.length;
     }
 
+    // Now lets do some cool stuff. lets set up routes for that director, actors, ratings
+    let directorNew = desiredObject.Director.split(',');
+    let actorsNew = desiredObject.Actors.split(',');
+    let genresNew = desiredObject.Genre.split(',');
+
+    
+    
+
+
+    // For directors
+    let directorHtml = '<div>';
+    directorHtml += "<span>Director(s): </span>"
+    for (let i = 0; i <directorNew.length; i++) { 
+      directorHtml += '<div>';
+      directorHtml += `<form action="/people">
+                      <input
+                        style="display: none"
+                        type="text"
+                        name="texter"
+                        id="texter"
+                        value="People"
+                      </input>
+                      <input
+                        style="display: none"
+                        type="text"
+                        name="search"
+                        id="search"
+                        value='${directorNew[i]}'
+                      </input>
+                        <button type="submit">${directorNew[i]}</button>
+                      </form>`;
+      directorHtml += "</div>";
+    }
+    directorHtml += "</div>";
+
+
+    // for actors
+    let actorHtml = '';
+    actorHtml += '<div>';
+    actorHtml += "<span>Actors(s): </span>"
+        for (let i = 0; i <actorsNew.length; i++) { 
+      actorHtml += '<div>';
+      actorHtml += `<form action="/people">
+                      <input
+                        style="display: none"
+                        type="text"
+                        name="texter"
+                        id="texter"
+                        value="People"
+                      </input>
+                      <input
+                        style="display: none"
+                        type="text"
+                        name="search"
+                        id="search"
+                        value='${actorsNew[i]}'
+                      </input>
+                        <button type="submit">${actorsNew[i]}</button>
+                      </form>`;
+      actorHtml += "</div>";
+    }
+    actorHtml += "</div>";
+
+
+    // for genres
+    let genresHtml = '';
+    genresHtml += '<div>';
+    genresHtml += "<span>Genres(s): </span>"
+        for (let i = 0; i <genresNew.length; i++) { 
+      genresHtml += '<div>';
+      genresHtml += `<form action="/movies">
+                      <input
+                        style="display: none"
+                        type="text"
+                        name="texter"
+                        id="texter"
+                        value="Genre"
+                      </input>
+                      <input
+                        style="display: none"
+                        type="text"
+                        name="search"
+                        id="search"
+                        value='${genresNew[i]}'
+                      </input>
+                        <button type="submit">${genresNew[i]}</button>
+                      </form>`;
+      genresHtml += "</div>";
+    }
+    genresHtml += "</div>";
+
+
+
+
     output += `
             <div class="unique-movie-size">
               <div class="well text-center">
                 <img src="${desiredObject.Poster}">
                 <h5 style="color:yellow;">${desiredObject.Title}</h5>
+<<<<<<< HEAD
                   <div style="color:yellow; class="card card-body">
+=======
+                  <div class="card card-body">
+>>>>>>> aed7557e51c7f1c2f90999f238acecaefae23d49
                     <p>${desiredObject.Plot}<p>
-                    <p>${rating}<p>
+                    <p>Maximo rating: ${Math.round(rating)}<p>
                     <p class="">Runtime: ${desiredObject.Runtime}<p>
                     <p class="">Release year: ${desiredObject.Year}<p>
-                    <p class="">Director: ${desiredObject.Director}<p>
-                    <p class="">Actors: ${desiredObject.Actors}<p>
-                    <p class="">Genres: ${desiredObject.Genre}<p>
+                      ${directorHtml}
+                      ${actorHtml}
+                      ${genresHtml}
                     <p class="">Rated: ${desiredObject.Rated}<p>
                     <p class="">Movie language: ${desiredObject.Language}<p>
                   </div>
