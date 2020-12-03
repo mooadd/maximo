@@ -91,10 +91,10 @@
 
   <div class="row text-center">
     <div class="col-md-4">
-      <div class="creative-card bg-primary text-white middle tweek">
+      <div class="creative-card bg-primary text-white middle">
         <h2>Following</h2>
 
-        <ul class="list-group middle tweek">
+        <ul class="list-group middle">
           <% for (var i=0; i < following.length; i++) { %>
           <form action="/users" id="my_form">
             <input
@@ -102,7 +102,6 @@
               type="text"
               name="search"
               id="search"
-              class="tweek"
               value=<%=following[i]%>
             />
 
@@ -149,39 +148,10 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="creative-card bg-success text-white middle">
-        <h2>People Following</h2>
+      <div class="creative-card bg-success text-white middle white">
+        <h2 class="white">Movies for you</h2>
+        <ul class= "middle">
 
-        <ul class="list-group">
-          <% for (var i=0; i < peopleFollowing.length; i++) { %>
-          <form action="/People" id="my_form3">
-            <input
-              style="display: none"
-              type="text"
-              name="texter"
-              id="texter"
-              value="People"
-            />
-
-            <input
-              style="display: none"
-              type="text"
-              name="search"
-              id="search"
-              value=<%=peopleFollowing[i]%>
-            />
-
-            <a
-              id="search-link"
-              class="list-group-item list-group-item-action list-group-item-light"
-              href="javascript:{}"
-              onclick="document.getElementById('my_form3').submit(); return false;"
-            >
-              <%= peopleFollowing[i] %>
-            </a>
-          </form>
-
-          <% } %>
         </ul>
       </div>
     </div>
@@ -198,8 +168,8 @@
 
   </div>
 
-  <div class="text-center my-4 movies-for-ya">
-    <h3 style = "color: white" class="lead">Movies for you</h3>
+  <div class="text-center my-4 movies-for-ya white">
+    <h3 class="lead">Movies for you</h3>
     <div id="movies" class="row">
 
     </div>
