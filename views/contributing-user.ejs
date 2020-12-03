@@ -91,10 +91,10 @@
 
   <div class="row text-center">
     <div class="col-md-4">
-      <div class="creative-card bg-primary text-white middle tweek">
+      <div class="creative-card bg-primary text-white middle">
         <h2>Following</h2>
 
-        <ul class="list-group middle tweek">
+        <ul class="list-group middle">
           <% for (var i=0; i < following.length; i++) { %>
           <form action="/users" id="my_form">
             <input
@@ -102,7 +102,6 @@
               type="text"
               name="search"
               id="search"
-              class="tweek"
               value=<%=following[i]%>
             />
 
@@ -149,6 +148,11 @@
       </div>
     </div>
     <div class="col-md-4">
+<<<<<<< HEAD
+      <div class="creative-card bg-success text-white middle white">
+        <h2 class="white">Movies for you</h2>
+        <ul class= "middle">
+=======
       <div class="creative-card bg-success text-white middle">
         <h2>People Following</h2>
 
@@ -174,8 +178,8 @@
               <%= peopleFollowing[i] %>
             </a> 
           </form>
+>>>>>>> aed7557e51c7f1c2f90999f238acecaefae23d49
 
-          <% } %>
         </ul>
       </div>
     </div>
@@ -192,8 +196,8 @@
 
   </div>
 
-  <div class="text-center my-4 movies-for-ya">
-    <h3 style = "color: white" class="lead">Movies for you</h3>
+  <div class="text-center my-4 movies-for-ya white">
+    <h3 class="lead">Movies for you</h3>
     <div id="movies" class="row">
 
     </div>

@@ -15,6 +15,63 @@ const { dir } = require("console");
 // let movies = JSON.parse(byteMovies);
 // console.log(movies[0]);
 
+//Body parser converts data into JSON format
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+// Connecing Database
+var mongoose = require("mongoose");
+const { stringify } = require("querystring");
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost:27017/maximo", {useNewUrlParser: true}, (err) => {
+  if (!err) { console.log('MongoDB Connection Succeeded.') }
+  else { console.log('Error in DB connection : ' + err) }
+});
+
+// Defining our schema
+var userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: 'This field is required.'
+  },
+  email: {
+    type: String,
+  },
+  password: {
+    type: String,
+    required: 'This field is required.'
+  },
+});
+
+// Custom validation for email
+userSchema.path('email').validate((val) => {
+  emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return emailRegex.test(val);
+}, 'Invalid e-mail.');
+
+// Creating Model
+var User = mongoose.model('User', userSchema);
+
+
+function insertUser(req, res) {
+  var user = new User();
+  user.username = req.body.username;
+  user.email = req.body.email;
+  user.password = req.body.password;
+  user.save((err,doc) => {
+    if (!err) {
+      console.log('success!')
+      res.redirect("/Login");
+    }
+    else {res.redirect("/Register");}
+  })
+}
+
+
+
+
+
 // An array to store user information
 let users = [
   {
@@ -100,6 +157,8 @@ app.use(expressLayouts);
 app.use(express.static("public"));
 // app.use('/css', express.static(__dirname + 'public/css'));
 app.set("views", path.join(__dirname, "views"));
+app.set("sub-files", path.join(__dirname, "sub-fles"));
+
 app.set("view engine", "ejs");
 app.use(
   session({
@@ -151,16 +210,56 @@ app
 app
   .route("/Register")
   .get((req, res) => {
-    if (userOnline != null) {
-      console.log("got here");
-      res.redirect("/Profile");
-    } else {
-      res.sendFile(__dirname + "/public/sub-files/sign-up.html");
-    }
+    res.render("sub-files/sign-up.ejs", User);
+    // if (userOnline != null) {
+    //   console.log("got here");
+    //   res.redirect("/Profile");
+    // } else {
+    //   res.sendFile(__dirname + "/public/sub-files/sign-up.html");
+    // }
   })
   .post(urlencodedParser, (req, res) => {
+    console.log(req.body);
+    if (req.body._id == '')
+    insertUser(req, res);
     // will get a username, email, password
     let userExists = false;
+<<<<<<< HEAD
+    // for (let i = 0; i < users.length; i++) { 
+    //   if (users[i].email.toUpperCase() === req.body.email.toUpperCase() ||
+    //     users[i].username.toUpperCase() === req.body.username.toUpperCase()) { 
+    //     userExists = true;
+    //     }
+    // }
+
+    // if (!userExists) {
+    //   try {
+    //     users.push({
+    //       id: Date.now().toString(),
+    //       username: req.body.username,
+    //       email: req.body.email,
+    //       password: req.body.password,
+    //       contributing_user: false,
+    //       following: [],
+    //       followers: [],
+    //       peopleFollowing: [],
+    //       comments: [],
+    //       ratings: [],
+    //     });
+    //     // If everything goes well. new user gets added to the array. we redirect
+    //     // the user to the login page
+    //     res.redirect("/Login");
+    //   } catch {
+    //     // If there is an error, we redirect the user back to the same page.
+    //     res.redirect("/Register");
+    //   }
+    // } else { 
+    //   res.redirect('/Register')
+    // }
+
+    
+
+=======
     for (let i = 0; i < users.length; i++) {
       if (
         users[i].email.toUpperCase() === req.body.email.toUpperCase() ||
@@ -195,6 +294,7 @@ app
     } else {
       res.redirect("/Register");
     }
+>>>>>>> aed7557e51c7f1c2f90999f238acecaefae23d49
   });
 
 // RESET PASSWORD ROUTE

@@ -25,10 +25,6 @@ body {
   padding: 0 0;
 }
 
-body {
-  background: black;
-}
-
 .frame {
   width: 90%;
   margin: 40px auto;
@@ -329,5 +325,13 @@ body {
 
 .left{
   margin-left: 885px;
+}
+
+.white{
+  color: white;
+}
+
+.yellow{
+  color: yellow;
 }
 /* Movie ratings */
