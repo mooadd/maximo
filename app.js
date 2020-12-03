@@ -28,6 +28,7 @@ let users = [
     peopleFollowing: [],
     comments: [],
     ratings: [],
+    notifications: [],
   },
   {
     id: 1,
@@ -40,6 +41,7 @@ let users = [
     peopleFollowing: [],
     comments: [],
     ratings: [],
+    notifications: [],
   },
 ];
 let userOnline = null; // Giving it a default value of null.
@@ -181,6 +183,7 @@ app
           peopleFollowing: [],
           comments: [],
           ratings: [],
+          notifications: [],
         });
         // If everything goes well. new user gets added to the array. we redirect
         // the user to the login page
@@ -354,8 +357,8 @@ app
             }
           }
         }
-        if (bool === false) { 
-          res.redirect('/Profile')
+        if (bool === false) {
+          res.redirect("/Profile");
         }
       }
     } else {
@@ -392,6 +395,7 @@ app
     if (userOnline == null) {
       res.redirect("/Login");
     } else {
+      console.log(userOnline);
       if (!userOnline.contributing_user) {
         // We go to the normal user profile page
         res.render("normal-user", userOnline);
@@ -475,7 +479,7 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
   for (let i = 0; i < users.length; i++) {
     if (users.username === userOnline.username) {
       users[i] = userOnline;
-      userOnline = users[i];
+
       break;
     }
   }

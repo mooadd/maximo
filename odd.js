@@ -28,5 +28,3 @@ function finished(err) {
 }
 
 // This is some file that was tweaking with the movie-data.json
-
-// What is up
