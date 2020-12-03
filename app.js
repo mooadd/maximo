@@ -10,10 +10,7 @@ const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 const { dir } = require("console");
 //const popup = require('popups');
-// Getting out json folder
-// let byteMovies = fs.readFileSync("./public/json/movie-data.json");
-// let movies = JSON.parse(byteMovies);
-// console.log(movies[0]);
+
 
 //Body parser converts data into JSON format
 app.use(bodyParser.json());
@@ -72,17 +69,12 @@ var userSchema = new mongoose.Schema({
   ],
   notifications: [
     {
-      type: String,
+      message: String,
+      username: String
     },
   ],
 });
-//       password: req.body.password,
-//       contributing_user: false,
-//       following: [],
-//       followers: [],
-//       peopleFollowing: [],
-//       comments: [],
-//       ratings: [],
+
 // Creating Model
 var User = mongoose.model("User", userSchema, "user");
 
@@ -100,19 +92,6 @@ function insertUser(req, res) {
 
     if (!userExists) {
       try {
-        // users.push({
-        //   id: Date.now().toString(),
-        //   username: req.body.username,
-        //   email: req.body.email,
-        //   password: req.body.password,
-        //   contributing_user: false,
-        //   following: [],
-        //   followers: [],
-        //   peopleFollowing: [],
-        //   comments: [],
-        //   ratings: [],
-        // });
-
         var user = new User();
         user.username = req.body.username;
         user.email = req.body.email;
@@ -139,43 +118,9 @@ function insertUser(req, res) {
 }
 
 // An array to store user information
-let users = [
-  {
-    id: 1,
-    username: "abdi",
-    email: "abdi@abdi",
-    password: "abdi",
-    contributing_user: true,
-    following: [],
-    followers: [],
-    peopleFollowing: [],
-    comments: [],
-    ratings: [],
-    notifications: [],
-  },
-  {
-    id: 1,
-    username: "jamie",
-    email: "jamie@jones",
-    password: "jamie",
-    contributing_user: true,
-    following: [],
-    followers: [],
-    peopleFollowing: [],
-    comments: [],
-    ratings: [],
-    notifications: [],
-  },
-];
-let userOnline = null; // Giving it a default value of null.
+let userOnline = null; 
 let userSearched = null;
 let personSearched = null;
-
-// const commentData = fs.readFileSync("./public/json/movie-comments.json");
-// let comments = JSON.parse(commentData);
-
-let movieComments = [];
-let movieRatings = [];
 
 // People stuff. Populating it.
 let people = [];
@@ -212,8 +157,6 @@ for (let i = 0; i < movies.length; i++) {
   // console.log(people);
 }
 
-// Create application/json parser
-const jsonParser = bodyParser.json();
 // Create application/x-www-form-urlencoded parser
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -252,7 +195,6 @@ app
     User.find({}, (err, users) => {
       let bool = false;
       try {
-        console.log(users);
         for (let i = 0; i < users.length; i++) {
           if (
             users[i].password.toUpperCase() ===
@@ -261,7 +203,6 @@ app
           ) {
             userOnline = users[i];
             bool = true;
-            console.log("going to the profile route");
             res.redirect("/Profile");
             break;
           }
@@ -274,77 +215,17 @@ app
         res.redirect("/Login");
       }
     });
-    // let bool = false;
-
-    // try {
-    //   for (let i = 0; i < users.length; i++) {
-    //     if (
-    //       users[i].username === req.body.username &&
-    //       users[i].password === req.body.password
-    //     ) {
-    //       userOnline = users[i];
-    //       bool = true;
-    //       res.redirect("/Profile");
-    //       break;
-    //     }
-    //   }
-
-    //   // if the password or username was wrong, we bring them back here
-    //   if (bool === false) {
-    //     res.redirect("/Login");
-    //   }
-    // } catch {
-    //   res.redirect("/Login");
-    // }
+  
   });
 // REGISTER ROUTE
 app
   .route("/Register")
   .get((req, res) => {
     res.render("sign-up");
-    // if (userOnline != null) {
-    //   console.log("got here");
-    //   res.redirect("/Profile");
-    // } else {
-    //   res.sendFile(__dirname + "/public/sub-files/sign-up.html");
-    // }
   })
   .post(urlencodedParser, (req, res) => {
     console.log(req.body);
     insertUser(req, res);
-
-    // let userExists = false;
-    // for (let i = 0; i < users.length; i++) {
-    //   if (users[i].email.toUpperCase() === req.body.email.toUpperCase() ||
-    //     users[i].username.toUpperCase() === req.body.username.toUpperCase()) {
-    //     userExists = true;
-    //     }
-    // }
-
-    // if (!userExists) {
-    //   try {
-    //     users.push({
-    //       id: Date.now().toString(),
-    //       username: req.body.username,
-    //       email: req.body.email,
-    //       password: req.body.password,
-    //       contributing_user: false,
-    //       following: [],
-    //       followers: [],
-    //       peopleFollowing: [],
-    //       comments: [],
-    //       ratings: [],
-    //     });
-    //     // If everything goes well. new user gets added to the array. we redirect
-    //     // the user to the login page
-    //     res.redirect("/Login");
-    //   } catch {
-    //     // If there is an error, we redirect the user back to the same page.
-    //     res.redirect("/Register");
-    //   }
-    // } else {
-    //   res.redirect('/Register')
-    // }
   });
 
 // RESET PASSWORD ROUTE
@@ -405,8 +286,6 @@ app
       Comments: [],
       Ratings: [],
     };
-
-    // let stringedMovie = JSON.stringify(movieObject, null, 2);
 
     movies.push(movieObject);
 
@@ -481,6 +360,7 @@ app
   .route("/users")
   .get((req, res) => {
     if (userOnline != null) {
+      console.log('the person you searched for is', req.query.search);
       const usernameUpper = req.query.search.toUpperCase();
 
       if (usernameUpper === userOnline.username.toUpperCase()) {
@@ -511,30 +391,6 @@ app
             res.redirect("/Profile");
           }
         });
-
-        // let bool = false;
-        // for (let i = 0; i < users.length; i++) {
-        //   if (users[i].username.toUpperCase() === usernameUpper) {
-        //     userSearched = users[i];
-        //     bool = true;
-        //     if (userOnline.following.includes(users[i].username)) {
-        //       res.render("user-view", {
-        //         follow: "unfollow",
-        //         username: userOnline.username,
-        //         foundUser: users[i],
-        //       });
-        //     } else {
-        //       res.render("user-view", {
-        //         follow: "follow",
-        //         username: userOnline.username,
-        //         foundUser: users[i],
-        //       });
-        //     }
-        //   }
-        // }
-        // if (bool === false) {
-        //   res.redirect("/Profile");
-        // }
       }
     } else {
       res.redirect("/Login");
@@ -554,23 +410,6 @@ app
 
     userSearched.save();
     userOnline.save();
-
-    // for (let i = 0; i < users.length; i++) {
-    //   if (users[i].username == userSearched.username) {
-    //     users[i] = userSearched;
-    //   }
-    //   if (users[i].username == userOnline.username) {
-    //     users[i] = userOnline;
-    //   }
-    // }
-    // User.findOneAndUpdate(
-    //   { id: userSearched._id },
-    //   { followers: userSearched.followers }
-    // );
-    // User.findOneAndUpdate(
-    //   { id: userSearched._id },
-    //   { following: userOnline.following }
-    // );
     res.redirect("/Profile");
   });
 
@@ -581,7 +420,7 @@ app
     if (userOnline == null) {
       res.redirect("/Login");
     } else {
-      console.log(userOnline);
+      // console.log(userOnline);
       if (!userOnline.contributing_user) {
         // We go to the normal user profile page
         res.render("normal-user", userOnline);
@@ -599,12 +438,6 @@ app
     }
 
     userOnline.save();
-    // userSchema.findOneAndUpdate({ username: userOnline.username }, {
-    //   contributing_user: userOnline.contributing_user
-    // });
-    // // for (let i = 0; i < users.length; i++) {
-    // //   if (userOnline.username === users[i].username) users[i] = userOnline;
-    // // }
     res.redirect("/Profile");
   });
 
@@ -662,20 +495,27 @@ app.route("/add-comment").post(urlencodedParser, (req, res) => {
     comment: comment,
     title: movieTitle,
   };
-  movieComments.push(commentObj);
 
   userOnline.comments.push(commentObj);
   userOnline.save();
-  // now lets update that for the users
-  // for (let i = 0; i < users.length; i++) {
-  //   if (users.username === userOnline.username) {
-  //     users[i] = userOnline;
 
-  //     break;
-  //   }
-  // }
 
-  // Lets add the comment to the movie comments
+  for (let i = 0; i < userOnline.followers.length; i++) { 
+    // lets find the user.
+    User.find({ username: userOnline.followers[i] }, (err, user) => {
+
+      let notificationObj = {
+        message: `${userOnline.username} commented on a movie`,
+        username: `${userOnline.username}`
+      }
+      let fakeUser = user[i];
+
+      fakeUser.notifications.push(notificationObj )
+
+      fakeUser.save();
+
+    });
+  }
 
   movies[movieId].Comments.push(req.body.comment); // We added a comment to this movie
 
@@ -702,14 +542,24 @@ app.route("/rating").post(urlencodedParser, (req, res) => {
   
   userOnline.ratings.push(ratingObj);
   userOnline.save();
-  movieRatings.push(ratingObj);
 
-  // for (let i = 0; i < users.length; i++) {
-  //   if (users.username === userOnline.username) {
-  //     users[i] = userOnline;
-  //   }
-  // }
 
+  for (let i = 0; i < userOnline.followers.length; i++) { 
+    // lets find the user.
+    User.find({ username: userOnline.followers[i] }, (err, user) => {
+
+      let notificationObj = {
+        message: `${userOnline.username} added a movie rating`,
+        username: `${userOnline.username}`
+      }
+      let fakeUser = user[i];
+
+      fakeUser.notifications.push(notificationObj )
+
+      fakeUser.save();
+
+    });
+  }
   // Lets add the rating to the movie ratings
   movies[movieId].Ratings.push(req.body.rating); // We added a comment to this movie
 

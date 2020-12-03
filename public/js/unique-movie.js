@@ -299,8 +299,8 @@ fetch(`../json/movie-data.json`)
 
                       <div class="form-group">
                         <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
-                        <input style="display:none" type='text' name="id" value=${movie_id}>
-                        <input style="display:none" type='text' name='title' value=${desiredObject.Title}>
+                        <input style="display:none" type='text' name="id" value='${movie_id}'>
+                        <input style="display:none" type='text' name='title' value='${desiredObject.Title}'>
                         <div class="d-flex flex-row-reverse my-2">
                           <button type="submit" class="btn btn-secondary">Add comment</button>
                         </div>
