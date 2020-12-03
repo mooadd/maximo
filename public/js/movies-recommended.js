@@ -64,7 +64,7 @@ fetch(`../json/movie-data.json`)
       output += `
         <div class="col-md-3">
             <div class="well text-center">
-              <img src="${recommendedMoviesObject[i].movie.Poster}">
+              <img class="img-poster" src="${recommendedMoviesObject[i].movie.Poster}">
               <form action="/movies/:">
                 <input type="text" id="movie_id" name="movie_id" value="${recommendedMoviesObject[i].index}">
                 <button class="btn btn-info" role="button" href="#">

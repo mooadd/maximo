@@ -25,7 +25,7 @@ function getMovies(searchText){
             output += `
               <div class="col-md-3">
                 <div class="well text-center">
-                  <img src="${data[i].Poster}">
+                  <img class="img-poster" src="${data[i].Poster}">
                   <h5 style="color:yellow;">${data[i].Title}</h5>
                   <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                     Movie Details

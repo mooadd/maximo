@@ -269,7 +269,7 @@ fetch(`../json/movie-data.json`)
     output += `
             <div class="unique-movie-size">
               <div class="well text-center">
-                <img src="${desiredObject.Poster}">
+                <img class="img-poster" src="${desiredObject.Poster}">
                 <h5 style="color:yellow;">${desiredObject.Title}</h5>
                   <div style="color:yellow; class="card card-body">
                     <p>${desiredObject.Plot}<p>

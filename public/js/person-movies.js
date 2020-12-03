@@ -17,7 +17,7 @@ const nameOutput = (dataObject, nameValue) => {
       output += `
             <div class="col-md-3">
               <div class="well text-center">
-                <img src="${dataObject[i].Poster}">
+                <img class="img-poster" src="${dataObject[i].Poster}">
                 <h5 style="color:yellow";>${dataObject[i].Title}</h5>
                 <a data-toggle="collapse" href="#collapseExample${i}" class="btn btn-primary" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Movie Details

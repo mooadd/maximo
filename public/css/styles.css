@@ -334,4 +334,11 @@ body {
 .yellow{
   color: yellow;
 }
-/* Movie ratings */
+
+.search-field {
+  margin: 3em 0;
+}
+
+.view-selection {
+  margin: 0.5em 0;
+}
