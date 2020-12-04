@@ -201,7 +201,7 @@ fetch(`../json/movie-data.json`)
                         id="search"
                         value='${directorNew[i]}'
                       </input>
-                        <button type="submit">${directorNew[i]}</button>
+                        <button class="good-looking" type="submit">${directorNew[i]}</button>
                       </form>`;
       directorHtml += "</div>";
     }
@@ -229,7 +229,7 @@ fetch(`../json/movie-data.json`)
                         id="search"
                         value='${actorsNew[i]}'
                       </input>
-                        <button type="submit">${actorsNew[i]}</button>
+                        <button class="good-looking" type="submit">${actorsNew[i]}</button>
                       </form>`;
       actorHtml += "</div>";
     }
@@ -257,7 +257,7 @@ fetch(`../json/movie-data.json`)
                         id="search"
                         value='${genresNew[i]}'
                       </input>
-                        <button type="submit">${genresNew[i]}</button>
+                        <button class="good-looking" type="submit">${genresNew[i]}</button>
                       </form>`;
       genresHtml += "</div>";
     }

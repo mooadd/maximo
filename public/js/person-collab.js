@@ -6,37 +6,52 @@ const findMostWorkedWith = (dataObject, nameValue) => {
 
   let workedWith = [];
   for (let i = 0; i < dataObject.length; i++) {
-    let director = dataObject[i].Director;
+    let director = dataObject[i].Director.split(",")
     let actors = dataObject[i].Actors.split(",");
 
+
     if (director.includes(nameValue) || actors.includes(nameValue)) {
-      if (!director.includes(nameValue)) {
-        if (!workedWith.includes(nameValue)) {
-          workedWith.push(director);
+      console.log(director)
+          console.log(actors)
+      for (let j = 0; j < director.length; j++) { 
+        if (director[j] != nameValue) { 
+          workedWith.push(director[j])
         }
-      } else {
-        if (!actors.includes(nameValue)) {
-          for (let z = 0; z < actors.length; z++) {
-            if (!actors[z].includes(nameValue)) {
-              if (!workedWith.includes(actors[z])) {
-                workedWith.push(actors[z]);
-              }
-            }
-          }
+      }
+      for (let z = 0; z < actors.length; z++) { 
+        if (actors[z] != nameValue) { 
+          workedWith.push(actors[z])
         }
       }
     }
   }
 
-  // console.log(workedWith);
+  console.log(`${nameValue} worked with`, workedWith);
   output += "<ul>";
   if (workedWith.length <= 5) {
     for (let i = 0; i < workedWith.length; i++) {
-      output += "<li>" + workedWith[i] + "</li>";
+      output += `<form action="/People">
+                    <input 
+                      style="display: none"
+                      name="search"
+                      value="${workedWith[i]}"
+                      ></input>
+                    <button class="good-looking" type="submit">${workedWith[i]}</button>
+                  </form>`
+      // output += "<li>" + workedWith[i] + "</li>";
     }
   } else {
+    // let's break it down. then.
     for (let i = 0; i < 5; i++) {
-      output += "<li>" + workedWith[i] + "</li>";
+            output += `<form action="/People">
+                    <input 
+                      style="display: none"
+                      name="search"
+                      value="${workedWith[i]}"
+                      ></input>
+                    <button class="good-looking" type="submit">${workedWith[i]}</button>
+                  </form>`
+      // output += "<li>" + workedWith[i] + "</li>";
     }
   }
 
