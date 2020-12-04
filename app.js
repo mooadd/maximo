@@ -356,7 +356,11 @@ app
   .route("/users")
   .get((req, res) => {
     if (userOnline != null) {
-      console.log('the person you searched for is', req.query.search);
+      if (req.query.hasOwnProperty('index')) { 
+        userOnline.notifications.splice(req.query.index, 1);
+        userOnline.save();
+        userOnline = userOnline;
+      }
       const usernameUpper = req.query.search.toUpperCase();
 
       if (usernameUpper === userOnline.username.toUpperCase()) {

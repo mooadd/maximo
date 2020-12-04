@@ -342,3 +342,12 @@ body {
 .view-selection {
   margin: 0.5em 0;
 }
+
+
+/* Notifications */
+
+#collapse-notifications {
+  max-width: 300px;
+  margin: 0 auto;
+}
+

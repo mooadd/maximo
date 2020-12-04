@@ -91,18 +91,25 @@
     </div>
 
 <!-- Fix this -->
-    <div class="text-center">
+    <div class="notification-box text-center">
       <div>
         <p>
-          <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          <a class="btn btn-primary" data-toggle="collapse" href="#collapse-notifications" role="button" aria-expanded="false" aria-controls="collapseExample">
             Notifications
           </a>
         </p>
-      <div class="collapse" id="collapseExample">
+      <div class="collapse" id="collapse-notifications">
         <div class="card card-body">
           <ul class="list-group middle">
             <% for (let i=0; i < notifications.length; i++) { %>
             <form action="/users" id="my_form">
+              <input
+                style="display: none"
+                type="text"
+                name="index"
+                id="index"
+                value='<%= i%>'
+              />
               <input
                 style="display: none"
                 type="text"
