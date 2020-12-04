@@ -347,11 +347,7 @@ app
       userOnline.peopleFollowing.splice(index, 1);
     }
 
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].username == userOnline.username) {
-        users[i] = userOnline;
-      }
-    }
+    userOnline.save();
     res.redirect("/Profile");
   });
 

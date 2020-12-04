@@ -97,6 +97,14 @@
         <ul class="list-group middle">
           <% for (var i=0; i < following.length; i++) { %>
           <form action="/users" id="my_form1">
+           <input
+            style="display: none;"
+              type="text"
+              type="text"
+              id="texter"
+              name="texter"
+              value="User"
+            />
             <input
               style="display: none"
               type="text"
@@ -104,15 +112,8 @@
               id="search"
               value=<%=following[i]%>
             />
-
-            <a
-              id="search-link"
-              class="list-group-item list-group-item-action list-group-item-light"
-              href="javascript:{}"
-              onclick="document.getElementById('my_form1').submit(); return false;"
-            >
-              <%= following[i] %>
-            </a>
+            
+            <button id="search-link" class="list-group-item list-group-item-action list-group-item-light" type="submit"><%= following[i] %></button>
           </form>
 
           <% } %>
@@ -130,17 +131,10 @@
               type="text"
               name="search"
               id="search"
-              value=<%=followers[i]%>
+              value='<%=followers[i]%>'
             />
 
-            <a
-              id="search-link"
-              class="list-group-item list-group-item-action list-group-item-light"
-              href="javascript:{}"
-              onclick="document.getElementById('my_form2').submit(); return false;"
-            >
-              <%= followers[i] %>
-            </a>
+            <button id="search-link" class="list-group-item list-group-item-action list-group-item-light" type="submit"><%= followers[i] %></button>
           </form>
 
           <% } %>
@@ -170,14 +164,7 @@
               value='<%=peopleFollowing[i]%>'
             />
 
-            <a
-              id="search-link"
-              class="list-group-item list-group-item-action list-group-item-light"
-              href="javascript:{}"
-              onclick="document.getElementById('my_form3').submit(); return false;"
-            >
-              <%= peopleFollowing[i] %>
-            </a>
+            <button id="search-link" class="list-group-item list-group-item-action list-group-item-light" type="submit"><%=peopleFollowing[i]%> </button>
           </form>
 
           <% } %>

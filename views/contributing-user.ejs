@@ -1,9 +1,6 @@
 
 <div class="container">
     <!-- This is the nav -->
-    <script>
-      $('.toast').toast('show');
-    </script> 
     <ul class="navbar transparent navbar-inverse">
       <li class="navbar transparent navbar-inverse">
         <a style="color: white" href="/Profile">User: <%=username%></a>
@@ -93,7 +90,7 @@
     </div>
     </div>
 
-
+<!-- Fix this -->
     <div class="text-center">
       <div>
         <p>
@@ -104,70 +101,62 @@
       <div class="collapse" id="collapseExample">
         <div class="card card-body">
           <ul class="list-group middle">
-          <% for (let i=0; i < notifications.length; i++) { %>
-          <form action="/users" id="my_form">
-            <input
-              style="display: none"
-              type="text"
-              name="search"
-              id="search"
-              value='<%= notifications[i].username %> '
-            />
+            <% for (let i=0; i < notifications.length; i++) { %>
+            <form action="/users" id="my_form">
+              <input
+                style="display: none"
+                type="text"
+                name="search"
+                id="search"
+                value='<%= notifications[i].username %>'
+              />
+              <button id="search-link" class="list-group-item list-group-item-action list-group-item-light" type="submit"><%= notifications[i].message  %></button>
+            </form>
 
-            <a
-              id="search-link"
-              class="list-group-item list-group-item-action list-group-item-light"
-              href="javascript:{}"
-              onclick="document.getElementById('my_form').submit(); return false;"
-            >
-              <%= notifications[i].message  %>
-            </a>
-          </form>
-
-          <% } %> 
+            <% } %> 
         </ul>
         </div>
       </div>
       </div>
     </div>
 
-     <div class="view-selection row text-center">
-       <div class="col-md-4">
-      <div class="creative-card bg-primary text-white middle">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="creative-card bg-primary text-white">
         <h2>Following</h2>
 
         <ul class="list-group middle">
           <% for (var i=0; i < following.length; i++) { %>
-          <form action="/users" id="my_form">
+          <form action="/users" id="my_form1">
+           <input
+            style="display: none;"
+              type="text"
+              type="text"
+              id="texter"
+              name="texter"
+              value="User"
+            />
             <input
               style="display: none"
               type="text"
               name="search"
               id="search"
-              value='<%=following[i]%>'
+              value=<%=following[i]%>
             />
-
-            <a
-              id="search-link"
-              class="list-group-item list-group-item-action list-group-item-light"
-              href="javascript:{}"
-              onclick="document.getElementById('my_form').submit(); return false;"
-            >
-              <%= following[i] %>
-            </a>
+            
+            <button id="search-link" class="list-group-item list-group-item-action list-group-item-light" type="submit"><%= following[i] %></button>
           </form>
 
           <% } %>
         </ul>
       </div>
     </div>
-
     <div class="col-md-4">
-      <div class="creative-card bg-info text-white middle">
+      <div class="creative-card bg-info text-white">
         <h2>Followers</h2>
-        <ul class="list-group middle">
+        <ul class="list-group">
           <% for (var i=0; i < followers.length; i++) { %>
-          <form action="/users" id="my_form">
+          <form action="/users" id="my_form2">
             <input
               style="display: none"
               type="text"
@@ -176,22 +165,14 @@
               value='<%=followers[i]%>'
             />
 
-            <a
-              id="search-link"
-              class="list-group-item list-group-item-action list-group-item-light"
-              href="javascript:{}"
-              onclick="document.getElementById('my_form').submit(); return false;"
-            >
-              <%= followers[i] %>
-            </a>
+            <button id="search-link" class="list-group-item list-group-item-action list-group-item-light" type="submit"><%= followers[i] %></button>
           </form>
 
           <% } %>
         </ul>
       </div>
     </div>
-
-        <div class="col-md-4">
+    <div class="col-md-4">
       <div class="creative-card bg-success text-white">
         <h2>People Following</h2>
 
@@ -214,21 +195,14 @@
               value='<%=peopleFollowing[i]%>'
             />
 
-            <a
-              id="search-link"
-              class="list-group-item list-group-item-action list-group-item-light"
-              href="javascript:{}"
-              onclick="document.getElementById('my_form3').submit(); return false;"
-            >
-              <%= peopleFollowing[i] %>
-            </a>
+            <button id="search-link" class="list-group-item list-group-item-action list-group-item-light" type="submit"><%=peopleFollowing[i]%> </button>
           </form>
 
           <% } %>
         </ul>
       </div>
     </div>
-    </div>
+  </div>
 
     <!-- The add movie button -->
   <div class="navbar transparent navbar-inverse">
